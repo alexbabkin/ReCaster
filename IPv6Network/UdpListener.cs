@@ -7,87 +7,41 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace Recaster.IPv6Network
 {
     class UdpListener
     {
-        private Socket udpSock;
-        private byte[] buffer;
-        private ManualResetEvent _invokedCallbackReceive;
+        private IPAddress _mcastGroup;
+        private int _localPort;
 
-        public void Starter()
+        public UdpListener(int port, IPAddress mcastGroup)
         {
-            _invokedCallbackReceive = new ManualResetEvent(false);
-            //Setup the socket and message buffer
-            udpSock = new Socket(AddressFamily.InterNetworkV6, 
-                SocketType.Dgram, 
-                ProtocolType.Udp);
-            udpSock.ExclusiveAddressUse = false;
-            udpSock.MulticastLoopback = true;
-            udpSock.Bind(new IPEndPoint(IPAddress.IPv6Any, 57125));
-
-            foreach (var i in CollectNetworkInterfaceIndexes())
-           {
-                udpSock.SetSocketOption(SocketOptionLevel.IPv6,
-                                     SocketOptionName.AddMembership,
-                                     new IPv6MulticastOption(IPAddress.Parse("ff3e::ffff:ff01"), i));
-             }
-
-
-
-            buffer = new byte[64 * 1024 - 4096];
-
-            //Start listening for a new message.
-            EndPoint newClientEP = new IPEndPoint(IPAddress.IPv6Any, 57125);
-            while (true)
-            {
-                //_invokedCallbackReceive.Reset();
-                udpSock.BeginReceiveFrom(buffer, 
-                    0, 
-                    buffer.Length, 
-                    SocketFlags.None, 
-                    ref newClientEP, 
-                    DoReceiveFrom, 
-                    udpSock);
-                Thread.Sleep(10);
-              //  _invokedCallbackReceive.WaitOne();
-            }
+            _mcastGroup = mcastGroup;
+            _localPort = port;
         }
 
-        private void DoReceiveFrom(IAsyncResult iar)
+        public async Task Starter()
         {
-            try
+            using (var udpClient = new UdpClient(_localPort, AddressFamily.InterNetworkV6))
             {
-                //Get the received message.
-                Socket recvSock = (Socket)iar.AsyncState;
-                EndPoint clientEP = new IPEndPoint(IPAddress.Parse("ff3e::ffff:ff01"), 57125);
-                int msgLen = recvSock.EndReceiveFrom(iar, ref clientEP);
-                byte[] localMsg = new byte[msgLen];
-                Array.Copy(buffer, localMsg, msgLen);
-
-                //Start listening for a new message.
-                EndPoint newClientEP = new IPEndPoint(IPAddress.IPv6Any, 0);
-                udpSock.BeginReceiveFrom(buffer, 
-                    0, 
-                    buffer.Length, 
-                    SocketFlags.None, 
-                    ref newClientEP, 
-                    DoReceiveFrom, 
-                    udpSock);
-
-                //Handle the received message
-                Console.WriteLine("Recieved {0} bytes from {1}:{2}",
-                                  msgLen,
-                                  ((IPEndPoint)clientEP).Address,
-                                  ((IPEndPoint)clientEP).Port);
-                //Do other, more interesting, things with the received message.
+                udpClient.JoinMulticastGroup(11, _mcastGroup);
+                while (true)
+                {
+                    UdpReceiveResult result = await udpClient.ReceiveAsync().ConfigureAwait(false);
+                    HandleUdpdata(result);
+                }
             }
-            catch (ObjectDisposedException)
-            {
-                //expected termination exception on a closed socket.
-                // ...I'm open to suggestions on a better way of doing this.
-            }
+            
+        }
+
+        private void HandleUdpdata(UdpReceiveResult result)
+        {
+            Console.WriteLine("Receved message from {0}:{1}. Message length is {2}", 
+                result.RemoteEndPoint.Address, 
+                result.RemoteEndPoint.Port,
+                result.Buffer.Length);
         }
 
         private List<int> CollectNetworkInterfaceIndexes()
