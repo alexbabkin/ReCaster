@@ -43,8 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPv6Network\IPv6MulticastHelper.cs" />
-    <Compile Include="IPv6Network\UdpListener.cs" />
+    <Compile Include="IPv6Network\IMulticastReceiver.cs" />
+    <Compile Include="IPv6Network\MulticastReceiver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
