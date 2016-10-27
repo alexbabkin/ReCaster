@@ -15,6 +15,7 @@ namespace Recaster
         static void Main(string[] args)
         {
             IMulticastReceiver udpListener1 = new MulticastReceiver(57125, IPAddress.Parse("ff3e::ffff:ff01"));
+            udpListener1.SetSourceQualifier(new SourceQualifier(IPAddress.Parse("::1"), QualifierOption.Discard));
             udpListener1.MessageReceived += 
                 (object sender, MulticastMsgEventArgs mMsg) => 
                 Console.WriteLine("Receved message from {0}:{1}. Message length is {2}", mMsg.RemoteEndpoint.Address, mMsg.RemoteEndpoint.Port, mMsg.Data.Length);

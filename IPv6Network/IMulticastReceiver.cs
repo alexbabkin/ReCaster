@@ -11,7 +11,7 @@ namespace Recaster.IPv6Network
     {
         Task Start();
         void Stop();
-        void SetRestrictions();
+        void SetSourceQualifier(ISourceQualifier sourceQualifier);
 
         event EventHandler<MulticastMsgEventArgs> MessageReceived;
     }

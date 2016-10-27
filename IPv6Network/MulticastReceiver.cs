@@ -15,6 +15,7 @@ namespace Recaster.IPv6Network
     {
         private IPAddress _mcastGroup;
         private int _localPort;
+        private List<ISourceQualifier> _qualifier;
 
         private List<int> CollectNetworkInterfaceIndexes()
         {
@@ -43,6 +44,7 @@ namespace Recaster.IPv6Network
         {
             _mcastGroup = mcastGroup;
             _localPort = port;
+            _qualifier = new List<ISourceQualifier>();
         }
 
         public async Task Start()
@@ -66,8 +68,11 @@ namespace Recaster.IPv6Network
                 while (true)
                 {
                     UdpReceiveResult result = await udpClient.ReceiveAsync().ConfigureAwait(false);
-                    MulticastMsgEventArgs e = new MulticastMsgEventArgs(result.RemoteEndPoint, result.Buffer);
-                    OnMessageReceived(e);
+                    if (_qualifier.All(q => q.IsSourceQualified(result.RemoteEndPoint)))
+                    {
+                        MulticastMsgEventArgs e = new MulticastMsgEventArgs(result.RemoteEndPoint, result.Buffer);
+                        OnMessageReceived(e);
+                    }
                 }
             }            
         }
@@ -77,9 +82,9 @@ namespace Recaster.IPv6Network
             throw new NotFiniteNumberException();
         }
 
-        public void SetRestrictions()
+        public void SetSourceQualifier(ISourceQualifier sourceQualifier)
         {
-            throw new NotFiniteNumberException();
+            _qualifier.Add(sourceQualifier);
         }
 
         protected void OnMessageReceived(MulticastMsgEventArgs e)
