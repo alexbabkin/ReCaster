@@ -24,7 +24,7 @@ namespace Recaster.Unicast.Sender
             try
             {
                 _client = new TcpClient();
-                _client.Connect(_endpoint);
+                _client.Connect(_endpoint.Address, _endpoint.Port);
                 _stream = _client.GetStream();
             }
             catch (Exception ex)
@@ -43,8 +43,7 @@ namespace Recaster.Unicast.Sender
         }
 
         public async Task SendAsync(MulticastMessage message)
-        {
-            
+        {            
             using (MemoryStream ms = new MemoryStream())
             {
                 BinaryFormatter binaryFormatter = new BinaryFormatter();

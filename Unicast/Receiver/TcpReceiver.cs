@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Recaster.Multicast;
 using System.Threading.Tasks.Dataflow;
+using Nito.AsyncEx;
 
 namespace Recaster.Unicast.Receiver
 {
@@ -17,6 +14,8 @@ namespace Recaster.Unicast.Receiver
     {
         private TcpListener _listener;
         private BufferBlock<MulticastMessage> _recvQueue;
+        private AsyncLock _asyncMutex;
+
         public TcpReceiver(IPEndPoint endPoint)
         {
             _listener = new TcpListener(endPoint);
@@ -73,7 +72,8 @@ namespace Recaster.Unicast.Receiver
                         try
                         {
                             var message = binaryFormatter.Deserialize(ms) as MulticastMessage;
-                            _recvQueue.Post(message);
+                            using (await _asyncMutex.LockAsync())
+                                _recvQueue.Post(message);
                         }
                         catch (Exception ex)
                         {
@@ -97,7 +97,9 @@ namespace Recaster.Unicast.Receiver
 
         public async Task<MulticastMessage> GetMessage()
         {
-            var msg = await _recvQueue.ReceiveAsync();
+            MulticastMessage msg = null;
+            using (await _asyncMutex.LockAsync())
+                msg = await _recvQueue.ReceiveAsync();
             return msg;
         }
     }

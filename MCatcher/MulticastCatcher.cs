@@ -39,6 +39,7 @@ namespace Recaster.MCatcher
                 var message = await _multicastManager.GetMulticastMessageAsync(ct);
                 Console.WriteLine("Got message from the queue. Sending to {0}:{1}",
                         message.MCastEndpoint.Address, message.MCastEndpoint.Port);
+
                 await _tcpSender.SendAsync(message);
             }
         }
