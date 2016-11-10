@@ -14,9 +14,9 @@ namespace Recaster.Unicast.Sender
         private NetworkStream _stream;
         private IPEndPoint _endpoint;
 
-        public TcpSender(IPEndPoint endpoint)
+        public TcpSender(IPEndPoint endPoint)
         {
-            _endpoint = endpoint;
+            _endpoint = endPoint;
         }
 
         public bool Connect()

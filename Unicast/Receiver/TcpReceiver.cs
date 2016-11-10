@@ -20,6 +20,7 @@ namespace Recaster.Unicast.Receiver
         {
             _listener = new TcpListener(endPoint);
             _recvQueue = new BufferBlock<MulticastMessage>();
+            _asyncMutex = new AsyncLock();
         }
 
         public async Task Start()
