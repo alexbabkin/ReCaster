@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Net;
 using Ninject;
 using Recaster.Multicast.Receiver;
 using Recaster.Multicast.Sender;
@@ -43,11 +43,13 @@ namespace Recaster.Dependency
             _kernel.Bind<IMulticastReceiveManager>().To<MulticastReceiveManager>()
                 .InSingletonScope();
             _kernel.Bind<ITcpSender>().To<TcpSender>()
-                .InSingletonScope();
+                .InSingletonScope()
+                .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("127.0.0.1"), 13001));
             _kernel.Bind<IMulticastDistributor>().To<MulticastDistributor>()
                 .InSingletonScope();
             _kernel.Bind<ITcpReceiver>().To<TcpReceiver>()
-                .InSingletonScope();
+                .InSingletonScope()
+                .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("10.0.2.15"), 13001));
             _kernel.Bind<IMulticastSender>().To<MulticastSender>()
                 .InSingletonScope()
                 .WithConstructorArgument("port", 55555);

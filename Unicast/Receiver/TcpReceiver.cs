@@ -17,9 +17,8 @@ namespace Recaster.Unicast.Receiver
     {
         private TcpListener _listener;
         private BufferBlock<MulticastMessage> _recvQueue;
-        public TcpReceiver()
+        public TcpReceiver(IPEndPoint endPoint)
         {
-            var endPoint = new IPEndPoint(IPAddress.Parse("10.0.2.15"), 13001);
             _listener = new TcpListener(endPoint);
             _recvQueue = new BufferBlock<MulticastMessage>();
         }

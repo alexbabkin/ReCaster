@@ -12,13 +12,19 @@ namespace Recaster.Unicast.Sender
     {
         private TcpClient _client;
         private NetworkStream _stream;
+        private IPEndPoint _endpoint;
 
-        public bool Connect(IPEndPoint endpoint)
+        public TcpSender(IPEndPoint endpoint)
+        {
+            _endpoint = endpoint;
+        }
+
+        public bool Connect()
         {
             try
             {
                 _client = new TcpClient();
-                _client.Connect(endpoint);
+                _client.Connect(_endpoint);
                 _stream = _client.GetStream();
             }
             catch (Exception ex)

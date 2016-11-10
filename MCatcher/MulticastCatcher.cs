@@ -45,7 +45,7 @@ namespace Recaster.MCatcher
 
         public void Start()
         {            
-            _tcpSender.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 13001));
+            _tcpSender.Connect();
             var receivingTask = _multicastManager.StartReceiversAsync(_cts.Token);
             var sendingTask = SendMessageAsync(_cts.Token);
             Task[] tasks = new Task[] { receivingTask , sendingTask };

@@ -6,7 +6,7 @@ namespace Recaster.Unicast.Sender
 {
     interface ITcpSender
     {
-        bool Connect(IPEndPoint endpoint);
+        bool Connect();
         void Disconnect();
         Task SendAsync(MulticastMessage message);
     }
