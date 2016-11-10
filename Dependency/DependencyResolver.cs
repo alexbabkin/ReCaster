@@ -1,6 +1,7 @@
 ﻿using System;
 using Ninject;
 using Recaster.Multicast.Receiver;
+using Recaster.Multicast.Sender;
 using Recaster.MCatcher;
 using Recaster.Unicast.Sender;
 using Recaster.Unicast.Receiver;
@@ -46,7 +47,10 @@ namespace Recaster.Dependency
             _kernel.Bind<IMulticastDistributor>().To<MulticastDistributor>()
                 .InSingletonScope();
             _kernel.Bind<ITcpReceiver>().To<TcpReceiver>()
-                .InSingletonScope();      
+                .InSingletonScope();
+            _kernel.Bind<IMulticastSender>().To<MulticastSender>()
+                .InSingletonScope()
+                .WithConstructorArgument("port", 55555);
         }
 
         private DependencyResolver(IKernel kernel)

@@ -71,6 +71,7 @@
     <Compile Include="MDistributor\IMulticastDistributor.cs" />
     <Compile Include="MDistributor\MulticastDistributor.cs" />
     <Compile Include="Multicast\Sender\IMulticastSender.cs" />
+    <Compile Include="Multicast\Sender\MulticastSender.cs" />
     <Compile Include="Unicast\Receiver\ITcpReceiver.cs" />
     <Compile Include="Unicast\Receiver\TcpReceiver.cs" />
     <Compile Include="Unicast\Sender\ITcpSender.cs" />
