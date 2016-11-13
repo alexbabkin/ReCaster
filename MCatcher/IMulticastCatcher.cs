@@ -4,7 +4,7 @@ namespace Recaster.MCatcher
 {
     interface IMulticastCatcher
     {
-        void Start(CancellationToken ct);
+        void Start();
         void Stop();
     }
 }
