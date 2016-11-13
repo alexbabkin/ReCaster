@@ -39,7 +39,7 @@ namespace Recaster.Unicast.Receiver
             {
                 ct.ThrowIfCancellationRequested();
                 TcpClient client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
-                Console.WriteLine("Client has connected");
+                Console.WriteLine("Client has connected: {0}", client.Client.RemoteEndPoint);
                 var task = StartConnectionAsync(client, ct);
             }
         }
@@ -70,9 +70,26 @@ namespace Recaster.Unicast.Receiver
                     ct.ThrowIfCancellationRequested();
                     await Task.Yield();
                     var buffer = new byte[BUFFER_SIZE];
-                    Console.WriteLine("[Server] Reading from client");
-                    var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE, ct);
-                    bufferOffset += byteCount;
+                    Console.WriteLine("[Server] Reading from client: {0}", client.Client.RemoteEndPoint);
+                    try
+                    {
+                        var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE, ct);
+                        if (byteCount == 0)
+                        {
+                            Console.WriteLine("Client {0} disconnected", client.Client.RemoteEndPoint);
+                            client.Close();
+                            return;
+                        }
+                        bufferOffset += byteCount;
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Exception while reading data: {0}", ex.ToString());
+                        client.Close();
+                        return;
+                    }
+                    
                     if (bufferOffset >= sizeof(long) && msgLength == 0)
                     {
                         msgLength = BitConverter.ToInt64(buffer, 0);
@@ -88,7 +105,7 @@ namespace Recaster.Unicast.Receiver
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex.ToString());
+                            Console.WriteLine("Exception while deserializing the object: {0}", ex.ToString());
                         }
                         Console.WriteLine("Got a message");
                         Array.ConstrainedCopy(buffer, sizeof(long) + (int)msgLength, 

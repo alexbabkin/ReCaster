@@ -49,7 +49,7 @@ namespace Recaster.Dependency
                 .InSingletonScope();
             _kernel.Bind<ITcpReceiver>().To<TcpReceiver>()
                 .InSingletonScope()
-                .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("127.0.0.1"), 13001));
+                .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("10.0.2.15"), 13001));
             _kernel.Bind<IMulticastSender>().To<MulticastSender>()
                 .InSingletonScope()
                 .WithConstructorArgument("port", 55555);
