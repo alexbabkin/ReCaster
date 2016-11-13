@@ -12,6 +12,9 @@ namespace Recaster.Unicast.Receiver
 {
     public class TcpReceiver: ITcpReceiver
     {
+        private static readonly int BUFFER_SIZE = 4096;
+        private static readonly int BYTE_COUNT_TO_RECEIVE = 1024;
+
         private TcpListener _listener;
         private BufferBlock<MulticastMessage> _recvQueue;
         private AsyncLock _asyncMutex;
@@ -58,9 +61,9 @@ namespace Recaster.Unicast.Receiver
                 while (true)
                 {
                     await Task.Yield();
-                    var buffer = new byte[4096];
+                    var buffer = new byte[BUFFER_SIZE];
                     Console.WriteLine("[Server] Reading from client");
-                    var byteCount = await stream.ReadAsync(buffer, bufferOffset, 1024);
+                    var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE);
                     bufferOffset += byteCount;
                     if (bufferOffset >= sizeof(long) && msgLength == 0)
                     {
