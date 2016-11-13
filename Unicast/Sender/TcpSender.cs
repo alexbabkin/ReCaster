@@ -29,6 +29,7 @@ namespace Recaster.Unicast.Sender
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Exception rised in Connect: {0}", ex.ToString());
                 return false;
             }
             return _client.Connected;
@@ -39,23 +40,31 @@ namespace Recaster.Unicast.Sender
             if (_client != null)
                 _client.Close();
             if (_stream != null)
-                _stream.Dispose();
+                _stream.Close();
         }
 
         public async Task SendAsync(MulticastMessage message)
-        {            
-            using (MemoryStream ms = new MemoryStream())
+        {
+            try
             {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                binaryFormatter.Serialize(ms, message);
-                byte[] msgLength = BitConverter.GetBytes(ms.Length);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    binaryFormatter.Serialize(ms, message);
+                    byte[] msgLength = BitConverter.GetBytes(ms.Length);
 
-                _stream.Write(msgLength, 0, msgLength.Length);
+                    _stream.Write(msgLength, 0, msgLength.Length);
 
-                ms.Position = 0;
-                ms.CopyTo(_stream);
+                    ms.Position = 0;
+                    ms.CopyTo(_stream);
+                }
+                await _stream.FlushAsync();
             }
-            await _stream.FlushAsync();
+            catch (Exception ex)
+            {
+                _stream.Position = 0;
+                Console.WriteLine("Exception rised in SendAsync: {0}", ex.ToString());
+            }
         }
     }
 }
