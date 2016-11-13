@@ -49,17 +49,15 @@ namespace Recaster.MCatcher
             _tcpSender.Connect();
             var receivingTask = _multicastManager.StartReceiversAsync(_cts.Token);
             var sendingTask = SendMessageAsync(_cts.Token);
-            Task[] tasks = new Task[] { receivingTask , sendingTask };
+            Task[] tasks = new Task[] { receivingTask, sendingTask };
             try
             {
                 Task.WaitAll(tasks);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.ToString());
-            }
-                       
-            Console.WriteLine("receivers stopped");
+                Console.WriteLine("MulticastCatcher exception: {0}", ex.ToString());
+            }                       
             Console.ReadLine();
         }
 

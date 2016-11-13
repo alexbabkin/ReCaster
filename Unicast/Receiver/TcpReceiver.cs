@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
@@ -7,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Recaster.Multicast;
 using System.Threading.Tasks.Dataflow;
 using Nito.AsyncEx;
+using Recaster.Utils;
 
 namespace Recaster.Unicast.Receiver
 {
@@ -26,20 +28,21 @@ namespace Recaster.Unicast.Receiver
             _asyncMutex = new AsyncLock();
         }
 
-        public async Task Start()
+        public async Task Start(CancellationToken ct)
         {
             _listener.Start();
             while (true)
             {
-                TcpClient client = await _listener.AcceptTcpClientAsync();
+                ct.ThrowIfCancellationRequested();
+                TcpClient client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
                 Console.WriteLine("Client has connected");
-                var task = StartConnectionAsync(client);
+                var task = StartConnectionAsync(client, ct);
             }
         }
 
-        private async Task StartConnectionAsync(TcpClient client)
+        private async Task StartConnectionAsync(TcpClient client, CancellationToken ct)
         {
-            var connectionTask = HandleConnectionAsync(client);
+            var connectionTask = HandleConnectionAsync(client, ct);
             try
             {
                 await connectionTask;
@@ -50,7 +53,7 @@ namespace Recaster.Unicast.Receiver
             }
         }
 
-        private async Task HandleConnectionAsync(TcpClient client)
+        private async Task HandleConnectionAsync(TcpClient client, CancellationToken ct)
         {
             var ms = new MemoryStream();
             BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -60,10 +63,11 @@ namespace Recaster.Unicast.Receiver
             {
                 while (true)
                 {
+                    ct.ThrowIfCancellationRequested();
                     await Task.Yield();
                     var buffer = new byte[BUFFER_SIZE];
                     Console.WriteLine("[Server] Reading from client");
-                    var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE);
+                    var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE, ct);
                     bufferOffset += byteCount;
                     if (bufferOffset >= sizeof(long) && msgLength == 0)
                     {
