@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Recaster.MDistributor
+namespace Recaster.Endpoint
 {
-    interface IMulticastDistributor
+    public interface IEndpoint
     {
         void Start();
         void Stop();

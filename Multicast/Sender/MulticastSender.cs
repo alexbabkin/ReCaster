@@ -31,9 +31,11 @@ namespace Recaster.Multicast.Sender
             _sender.Client.Bind(new IPEndPoint(adress, port));
         }
 
-        public async Task SendAsync(byte[] data, IPEndPoint endPoint, CancellationToken ct)
+        public async Task SendAsync(MulticastMessage message, CancellationToken ct)
         {
-            await _sender.SendAsync(data, data.Length, endPoint).WithCancellation(ct);
+            await _sender
+                .SendAsync(message.Buffer, message.Buffer.Length, message.MCastEndpoint)
+                .WithCancellation(ct);
         }
     }
 }

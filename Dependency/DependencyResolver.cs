@@ -2,10 +2,9 @@
 using Ninject;
 using Recaster.Multicast.Receiver;
 using Recaster.Multicast.Sender;
-using Recaster.MCatcher;
 using Recaster.Unicast.Sender;
 using Recaster.Unicast.Receiver;
-using Recaster.MDistributor;
+using Recaster.Endpoint;
 
 namespace Recaster.Dependency
 {
@@ -38,14 +37,14 @@ namespace Recaster.Dependency
 
         private DependencyResolver():this(new StandardKernel())
         {
-            _kernel.Bind<IMulticastCatcher>().To<MulticastCatcher>()
+            _kernel.Bind<MulticastCatcher>().ToSelf()
                 .InSingletonScope();
             _kernel.Bind<IMulticastReceiveManager>().To<MulticastReceiveManager>()
                 .InSingletonScope();
             _kernel.Bind<ITcpSender>().To<TcpSender>()
                 .InSingletonScope()
                 .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("127.0.0.1"), 13001));
-            _kernel.Bind<IMulticastDistributor>().To<MulticastDistributor>()
+            _kernel.Bind<MulticastDistributor>().ToSelf()
                 .InSingletonScope();
             _kernel.Bind<ITcpReceiver>().To<TcpReceiver>()
                 .InSingletonScope()

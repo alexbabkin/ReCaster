@@ -1,7 +1,6 @@
 ﻿using System;
 using Recaster.Dependency;
-using Recaster.MCatcher;
-using Recaster.MDistributor;
+using Recaster.Endpoint;
 using System.Linq;
 
 
@@ -11,18 +10,16 @@ namespace Recaster
     {
         static void Main(string[] args)
         {
+            IEndpoint endpoint = null;
             if (args.Contains("-mc"))
             {
-                var catcher = DependencyResolver.Get<IMulticastCatcher>();
-                catcher.Start();
-                catcher.Stop();
+                endpoint = DependencyResolver.Get<MulticastCatcher>();
             }
             else
             {
-                var sender = DependencyResolver.Get<IMulticastDistributor>();
-                sender.Start();
-                sender.Stop();
+                endpoint = DependencyResolver.Get<MulticastDistributor>();
             }
+            endpoint.Start();
             Console.ReadLine();
         }
     }

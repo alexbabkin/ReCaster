@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Threading;
 using System.Net;
+using Recaster.Multicast;
+using Recaster.Endpoint;
 
 namespace Recaster.Multicast.Sender
 {
-    interface IMulticastSender
+    interface IMulticastSender: ISender
     {
-        Task SendAsync(byte[] data, IPEndPoint endPoint, CancellationToken ct);        
+        new Task SendAsync(MulticastMessage message, CancellationToken ct);
     }
 }

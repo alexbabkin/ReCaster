@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Recaster.Multicast;
-using System.IO;
+
 
 namespace Recaster.Unicast.Sender
 {
@@ -43,7 +45,7 @@ namespace Recaster.Unicast.Sender
                 _stream.Close();
         }
 
-        public async Task SendAsync(MulticastMessage message)
+        public async Task SendAsync(MulticastMessage message, CancellationToken ct)
         {
             try
             {

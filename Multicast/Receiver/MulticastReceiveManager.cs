@@ -31,13 +31,13 @@ namespace Recaster.Multicast.Receiver
             _receivers.Add(receiver);
         }
 
-        public async Task<MulticastMessage> GetMulticastMessageAsync(CancellationToken ct)
+        public async Task<MulticastMessage> GetMessageAsync(CancellationToken ct)
         {
             var message = await _mcastQueue.ReceiveAsync(ct);
             return message;
         }
 
-        public async Task StartReceiversAsync(CancellationToken ct)
+        public async Task StartAsync(CancellationToken ct)
         {
             Task[] tasks = new Task[_receivers.Count];
             for (int i = 0; i < _receivers.Count; i++)
@@ -47,7 +47,7 @@ namespace Recaster.Multicast.Receiver
             await Task.WhenAll(tasks);
         }
 
-        public void StopReceivers()
+        public void Stop()
         {
             foreach (var rcv in _receivers)
                 rcv.MessageReceived -= MessageReceived;

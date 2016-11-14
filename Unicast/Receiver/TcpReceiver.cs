@@ -25,7 +25,7 @@ namespace Recaster.Unicast.Receiver
             _recvQueue = new BufferBlock<MulticastMessage>();
         }
 
-        public async Task Start(CancellationToken ct)
+        public async Task StartAsync(CancellationToken ct)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace Recaster.Unicast.Receiver
             throw new NotImplementedException();
         }
 
-        public async Task<MulticastMessage> GetMessage()
+        public async Task<MulticastMessage> GetMessageAsync(CancellationToken ct)
         {
             MulticastMessage msg = null;
             msg = await _recvQueue.ReceiveAsync();

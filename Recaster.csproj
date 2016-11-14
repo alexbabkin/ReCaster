@@ -52,10 +52,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MDistributor\IMulticastDistributor.cs" />
-    <Compile Include="MDistributor\MulticastDistributor.cs" />
+    <Compile Include="Endpoint\IEndpoint.cs" />
+    <Compile Include="Endpoint\IReceiver.cs" />
+    <Compile Include="Endpoint\ISender.cs" />
+    <Compile Include="Endpoint\MulticastDistributor.cs" />
     <Compile Include="Multicast\Sender\IMulticastSender.cs" />
     <Compile Include="Multicast\Sender\MulticastSender.cs" />
+    <Compile Include="Endpoint\TaskAggregator.cs" />
     <Compile Include="Unicast\Receiver\ITcpReceiver.cs" />
     <Compile Include="Unicast\Receiver\TcpReceiver.cs" />
     <Compile Include="Unicast\Sender\ITcpSender.cs" />
@@ -69,8 +72,7 @@
     <Compile Include="Multicast\Receiver\SourceQualifier\ISourceQualifier.cs" />
     <Compile Include="Multicast\Receiver\MulticastReceiver.cs" />
     <Compile Include="Multicast\Receiver\SourceQualifier\SourceQualifier.cs" />
-    <Compile Include="MCatcher\IMulticastCatcher.cs" />
-    <Compile Include="MCatcher\MulticastCatcher.cs" />
+    <Compile Include="Endpoint\MulticastCatcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
