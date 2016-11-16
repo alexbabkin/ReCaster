@@ -5,6 +5,7 @@ using Recaster.Multicast.Sender;
 using Recaster.Unicast.Sender;
 using Recaster.Unicast.Receiver;
 using Recaster.Endpoint;
+using Recaster.Configuration;
 
 namespace Recaster.Dependency
 {
@@ -37,6 +38,11 @@ namespace Recaster.Dependency
 
         private DependencyResolver():this(new StandardKernel())
         {
+            _kernel.Bind<IConfigManager>().To<ConfigManager>()
+                .InSingletonScope();
+            _kernel.Bind<IEndpoint>().To<MulticastCatcher>()
+                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulticastChatcher)
+                .InSingletonScope();
             _kernel.Bind<MulticastCatcher>().ToSelf()
                 .InSingletonScope();
             _kernel.Bind<IMulticastReceiveManager>().To<MulticastReceiveManager>()

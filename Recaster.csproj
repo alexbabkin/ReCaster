@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -52,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigManager.cs" />
+    <Compile Include="Configuration\IConfigManager.cs" />
+    <Compile Include="Configuration\MulticastReceiverSettings.cs" />
+    <Compile Include="Configuration\UnicastSettings.cs" />
     <Compile Include="Endpoint\IEndpoint.cs" />
     <Compile Include="Endpoint\IReceiver.cs" />
     <Compile Include="Endpoint\ISender.cs" />
@@ -59,6 +67,11 @@
     <Compile Include="Multicast\Sender\IMulticastSender.cs" />
     <Compile Include="Multicast\Sender\MulticastSender.cs" />
     <Compile Include="Endpoint\TaskAggregator.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Unicast\Receiver\ITcpReceiver.cs" />
     <Compile Include="Unicast\Receiver\TcpReceiver.cs" />
     <Compile Include="Unicast\Sender\ITcpSender.cs" />
@@ -79,6 +92,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
