@@ -8,7 +8,7 @@ namespace Recaster.Configuration
 {
     public enum EndpointType
     {        
-        MulticastChatcher,
+        MulticastCatcher,
         MulitcastReceivar
     }
     public interface IConfigManager

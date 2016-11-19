@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using Recaster.Endpoint;
+using Recaster.Configuration;
 
 namespace Recaster.Multicast.Receiver
 {
-    class MulticastReceiveManager : IMulticastReceiveManager
+    class MulticastReceiveManager : IReceiver
     {
         private List<IMulticastReceiver> _receivers;
         private BufferBlock<MulticastMessage> _mcastQueue;
@@ -19,16 +21,16 @@ namespace Recaster.Multicast.Receiver
             _mcastQueue.Post(message); 
         }
 
-        public MulticastReceiveManager()
+        public MulticastReceiveManager(IConfigManager config)
         {
             _receivers = new List<IMulticastReceiver>();
+            foreach (var mgroupSetting in config.MCastRecvSettings)
+            {
+                var receiver = new MulticastReceiver(mgroupSetting);
+                receiver.MessageReceived += MessageReceived;
+                _receivers.Add(receiver);
+            }            
             _mcastQueue = new BufferBlock<MulticastMessage>();
-        }
-
-        public void AddReceiver(IMulticastReceiver receiver)
-        {
-            receiver.MessageReceived += MessageReceived;
-            _receivers.Add(receiver);
         }
 
         public async Task<MulticastMessage> GetMessageAsync(CancellationToken ct)

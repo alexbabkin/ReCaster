@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Recaster.Multicast.Receiver.SourceQualifier;
 using Recaster.Utils;
+using Recaster.Configuration;
 
 namespace Recaster.Multicast.Receiver
 {
@@ -40,11 +41,11 @@ namespace Recaster.Multicast.Receiver
             return result;
         }
 
-        public MulticastReceiver(int port, IPAddress mcastGroup)
+        public MulticastReceiver(MulticastGroupSettings settings)
         {
-            _mcastGroup = mcastGroup;
-            _localPort = port;
-            _qualifier = new List<ISourceQualifier>();
+            _mcastGroup = IPAddress.Parse(settings.GroupAdreass);
+            _localPort = settings.Port;
+            //_qualifier = settings.Qualifier;
         }
 
         public async Task StartAsync(CancellationToken ct)

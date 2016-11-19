@@ -8,10 +8,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Recaster.Multicast;
 using System.Threading.Tasks.Dataflow;
 using Recaster.Utils;
+using Recaster.Endpoint;
+using Recaster.Configuration;
 
 namespace Recaster.Unicast.Receiver
 {
-    public class TcpReceiver: ITcpReceiver
+    public class TcpReceiver : IReceiver
     {
         private static readonly int BUFFER_SIZE = 4096;
         private static readonly int BYTE_COUNT_TO_RECEIVE = 1024;
@@ -19,9 +21,12 @@ namespace Recaster.Unicast.Receiver
         private TcpListener _listener;
         private BufferBlock<MulticastMessage> _recvQueue;
 
-        public TcpReceiver(IPEndPoint endPoint)
+        public TcpReceiver(IConfigManager config)
         {
-            _listener = new TcpListener(endPoint);
+            var ip = config.UnicastRecvSettings.IP;
+            var port = config.UnicastRecvSettings.Port;
+            var endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            _listener = new TcpListener(endpoint);
             _recvQueue = new BufferBlock<MulticastMessage>();
         }
 
@@ -120,7 +125,7 @@ namespace Recaster.Unicast.Receiver
 
         public void Stop()
         {
-            throw new NotImplementedException();
+            _listener.Stop();
         }
 
         public async Task<MulticastMessage> GetMessageAsync(CancellationToken ct)

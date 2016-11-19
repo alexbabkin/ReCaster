@@ -40,24 +40,25 @@ namespace Recaster.Dependency
         {
             _kernel.Bind<IConfigManager>().To<ConfigManager>()
                 .InSingletonScope();
-            _kernel.Bind<IEndpoint>().To<MulticastCatcher>()
-                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulticastChatcher)
+
+            _kernel.Bind<IEndpoint>().To<RecasterEndpoint>()
                 .InSingletonScope();
-            _kernel.Bind<MulticastCatcher>().ToSelf()
+
+            _kernel.Bind<IReceiver>().To<MulticastReceiveManager>()
+                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulticastCatcher)
                 .InSingletonScope();
-            _kernel.Bind<IMulticastReceiveManager>().To<MulticastReceiveManager>()
+
+            _kernel.Bind<ISender>().To<TcpSender>()
+                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulticastCatcher)
                 .InSingletonScope();
-            _kernel.Bind<ITcpSender>().To<TcpSender>()
-                .InSingletonScope()
-                .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("127.0.0.1"), 13001));
-            _kernel.Bind<MulticastDistributor>().ToSelf()
+
+            _kernel.Bind<IReceiver>().To<TcpReceiver>()
+                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceivar)
                 .InSingletonScope();
-            _kernel.Bind<ITcpReceiver>().To<TcpReceiver>()
-                .InSingletonScope()
-                .WithConstructorArgument("endPoint", new IPEndPoint(IPAddress.Parse("10.0.2.15"), 13001));
-            _kernel.Bind<IMulticastSender>().To<MulticastSender>()
-                .InSingletonScope()
-                .WithConstructorArgument("port", 55555);
+
+            _kernel.Bind<ISender>().To<MulticastSender>()
+                 .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceivar)
+                .InSingletonScope();
         }
 
         private DependencyResolver(IKernel kernel)

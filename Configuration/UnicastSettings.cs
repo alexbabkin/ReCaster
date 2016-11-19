@@ -8,7 +8,7 @@ namespace Recaster.Configuration
 {
     public class UnicastSettings
     {
-        public string sourceIP { get; set; } = String.Empty;
+        public string IP { get; set; } = String.Empty;
         public int Port { get; set; } = 0;
     }
 }

@@ -3,10 +3,12 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Recaster.Utils;
+using Recaster.Endpoint;
+using Recaster.Configuration;
 
 namespace Recaster.Multicast.Sender
 {
-    class MulticastSender : IMulticastSender
+    class MulticastSender : ISender
     {
         private UdpClient _sender;
 
@@ -19,16 +21,10 @@ namespace Recaster.Multicast.Sender
                 SocketOptionName.ExclusiveAddressUse, false);
         }
 
-        public MulticastSender(int port)
+        public MulticastSender(IConfigManager config)
         {
             CreateSender();
-            _sender.Client.Bind(new IPEndPoint(IPAddress.IPv6Any, port));              
-        }
-
-        public MulticastSender(IPAddress adress, int port)
-        {
-            CreateSender();
-            _sender.Client.Bind(new IPEndPoint(adress, port));
+            _sender.Client.Bind(new IPEndPoint(IPAddress.IPv6Any, 55555));              
         }
 
         public async Task SendAsync(MulticastMessage message, CancellationToken ct)

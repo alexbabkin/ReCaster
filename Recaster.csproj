@@ -63,29 +63,23 @@
     <Compile Include="Endpoint\IEndpoint.cs" />
     <Compile Include="Endpoint\IReceiver.cs" />
     <Compile Include="Endpoint\ISender.cs" />
-    <Compile Include="Endpoint\MulticastDistributor.cs" />
-    <Compile Include="Multicast\Sender\IMulticastSender.cs" />
     <Compile Include="Multicast\Sender\MulticastSender.cs" />
-    <Compile Include="Endpoint\TaskAggregator.cs" />
+    <Compile Include="Endpoint\RecasterEndpoint.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Unicast\Receiver\ITcpReceiver.cs" />
     <Compile Include="Unicast\Receiver\TcpReceiver.cs" />
-    <Compile Include="Unicast\Sender\ITcpSender.cs" />
     <Compile Include="Unicast\Sender\TcpSender.cs" />
     <Compile Include="Utils\AsyncExtensions.cs" />
     <Compile Include="Dependency\DependencyResolver.cs" />
     <Compile Include="Multicast\MulticastMessage.cs" />
-    <Compile Include="Multicast\Receiver\IMulticastReceiveManager.cs" />
     <Compile Include="Multicast\Receiver\IMulticastReceiver.cs" />
     <Compile Include="Multicast\Receiver\MulticastReceiveManager.cs" />
     <Compile Include="Multicast\Receiver\SourceQualifier\ISourceQualifier.cs" />
     <Compile Include="Multicast\Receiver\MulticastReceiver.cs" />
     <Compile Include="Multicast\Receiver\SourceQualifier\SourceQualifier.cs" />
-    <Compile Include="Endpoint\MulticastCatcher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

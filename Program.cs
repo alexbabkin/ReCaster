@@ -10,15 +10,7 @@ namespace Recaster
     {
         static void Main(string[] args)
         {
-            IEndpoint endpoint = null;
-            if (args.Contains("-mc"))
-            {
-                endpoint = DependencyResolver.Get<MulticastCatcher>();
-            }
-            else
-            {
-                endpoint = DependencyResolver.Get<MulticastDistributor>();
-            }
+            IEndpoint  endpoint = DependencyResolver.Get<IEndpoint>();
             endpoint.Start();
             Console.ReadLine();
         }

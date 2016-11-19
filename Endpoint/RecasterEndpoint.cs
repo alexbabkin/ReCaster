@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Recaster.Endpoint
 {
-    public abstract class TaskAggregator : IEndpoint
+    public class RecasterEndpoint : IEndpoint
     {
         private IReceiver _receiver;
         private ISender _sender;
@@ -20,7 +20,7 @@ namespace Recaster.Endpoint
             }
         }
 
-        public TaskAggregator(IReceiver reveiver, ISender sender)
+        public RecasterEndpoint(IReceiver reveiver, ISender sender)
         {
             _cts = new CancellationTokenSource();
             _receiver = reveiver;

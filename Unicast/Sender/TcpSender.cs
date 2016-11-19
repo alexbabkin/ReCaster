@@ -6,27 +6,29 @@ using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Recaster.Multicast;
-
+using Recaster.Endpoint;
+using Recaster.Configuration;
 
 namespace Recaster.Unicast.Sender
 {
-    public class TcpSender : ITcpSender
+    public class TcpSender : ISender, IDisposable
     {
         private TcpClient _client;
         private NetworkStream _stream;
         private IPEndPoint _endpoint;
 
-        public TcpSender(IPEndPoint endPoint)
+        public TcpSender(IConfigManager config)
         {
-            _endpoint = endPoint;
+            var ip = config.UnicastSndSettings.IP;
+            var port = config.UnicastSndSettings.Port;
+            _endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
         }
 
-        public bool Connect()
+        private async Task<bool> Connect()
         {
             try
             {
-                _client = new TcpClient();
-                _client.Connect(_endpoint.Address, _endpoint.Port);
+                await _client.ConnectAsync(_endpoint.Address, _endpoint.Port);
                 _stream = _client.GetStream();
             }
             catch (Exception ex)
@@ -37,7 +39,7 @@ namespace Recaster.Unicast.Sender
             return _client.Connected;
         }
 
-        public void Disconnect()
+        private void Disconnect()
         {
             if (_client != null)
                 _client.Close();
@@ -47,6 +49,11 @@ namespace Recaster.Unicast.Sender
 
         public async Task SendAsync(MulticastMessage message, CancellationToken ct)
         {
+            if (_client == null)
+                _client = new TcpClient();
+            if (!_client.Connected)
+                if (!await Connect())
+                    return;
             try
             {
                 using (MemoryStream ms = new MemoryStream())
@@ -66,7 +73,14 @@ namespace Recaster.Unicast.Sender
             {
                 _stream.Position = 0;
                 Console.WriteLine("Exception rised in SendAsync: {0}", ex.ToString());
+                if (!_client.Connected)
+                    Disconnect();
             }
+        }
+
+        public void Dispose()
+        {
+            Disconnect();
         }
     }
 }
