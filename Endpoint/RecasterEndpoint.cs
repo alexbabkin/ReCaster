@@ -1,4 +1,5 @@
 ﻿using System;
+using log4net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,6 +7,8 @@ namespace Recaster.Endpoint
 {
     public class RecasterEndpoint : IEndpoint
     {
+        private static readonly ILog log = LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IReceiver _receiver;
         private ISender _sender;
         private CancellationTokenSource _cts;
@@ -38,7 +41,7 @@ namespace Recaster.Endpoint
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Eexception: {0}", ex.ToString());
+                log.Error("Exception in endpoint", ex);  
             }
             Console.ReadLine();
         }

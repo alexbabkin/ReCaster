@@ -5,8 +5,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Recaster.Multicast;
 using System.Threading.Tasks.Dataflow;
+using log4net;
+using Recaster.Multicast;
 using Recaster.Utils;
 using Recaster.Endpoint;
 using Recaster.Configuration;
@@ -18,6 +19,8 @@ namespace Recaster.Unicast.Receiver
         private static readonly int BUFFER_SIZE = 4096;
         private static readonly int BYTE_COUNT_TO_RECEIVE = 1024;
 
+        private static readonly ILog log = LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private TcpListener _listener;
         private BufferBlock<MulticastMessage> _recvQueue;
 
@@ -38,13 +41,13 @@ namespace Recaster.Unicast.Receiver
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception in TcpReceiver.Start: {0}", ex.ToString());
+                log.Error("Exception in TcpReceiver.Start", ex);
             }
             while (true)
             {
                 ct.ThrowIfCancellationRequested();
                 TcpClient client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
-                Console.WriteLine("Client has connected: {0}", client.Client.RemoteEndPoint);
+                log.Info($"Client has connected: {client.Client.RemoteEndPoint}");
                 var task = StartConnectionAsync(client, ct);
             }
         }
@@ -75,13 +78,13 @@ namespace Recaster.Unicast.Receiver
                     ct.ThrowIfCancellationRequested();
                     await Task.Yield();
                     var buffer = new byte[BUFFER_SIZE];
-                    Console.WriteLine("[Server] Reading from client: {0}", client.Client.RemoteEndPoint);
+                    log.Info($"[Server] Reading from client: {client.Client.RemoteEndPoint}");
                     try
                     {
                         var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE, ct);
                         if (byteCount == 0)
                         {
-                            Console.WriteLine("Client {0} disconnected", client.Client.RemoteEndPoint);
+                            log.Info($"Client {client.Client.RemoteEndPoint} disconnected");
                             client.Close();
                             return;
                         }
@@ -90,7 +93,7 @@ namespace Recaster.Unicast.Receiver
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Exception while reading data: {0}", ex.ToString());
+                        log.Info("Exception while reading data", ex);
                         client.Close();
                         return;
                     }
@@ -110,9 +113,8 @@ namespace Recaster.Unicast.Receiver
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine("Exception while deserializing the object: {0}", ex.ToString());
+                            log.Error("Exception while deserializing object", ex);
                         }
-                        Console.WriteLine("Got a message");
                         Array.ConstrainedCopy(buffer, sizeof(long) + (int)msgLength, 
                             buffer, 0, 
                             bufferOffset - sizeof(long) - (int)msgLength);

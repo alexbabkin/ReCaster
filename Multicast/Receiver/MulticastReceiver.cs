@@ -95,11 +95,6 @@ namespace Recaster.Multicast.Receiver
             throw new NotImplementedException();
         }
 
-        public void SetSourceQualifier(ISourceQualifier sourceQualifier)
-        {
-            _qualifiers.Add(sourceQualifier);
-        }
-
         protected void OnMessageReceived(MulticastMsgEventArgs e)
         {
             Volatile.Read(ref MessageReceived)?.Invoke(this, e);

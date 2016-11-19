@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using log4net;
 using Recaster.Endpoint;
 using Recaster.Configuration;
 
@@ -10,13 +11,14 @@ namespace Recaster.Multicast.Receiver
 {
     class MulticastReceiveManager : IReceiver
     {
+        private static readonly ILog log = LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private List<IMulticastReceiver> _receivers;
         private BufferBlock<MulticastMessage> _mcastQueue;
 
         private void MessageReceived(object sender, MulticastMsgEventArgs mMsg)
         {
-            Console.WriteLine("Receved message from {0}:{1}. Message length is {2}",
-                mMsg.RemoteEndpoint.Address, mMsg.RemoteEndpoint.Port, mMsg.Data.Length);
+            log.Info($"Receved message from {mMsg.RemoteEndpoint.Address}:{mMsg.RemoteEndpoint.Port}. Message length is {mMsg.Data.Length}");
             var message = new MulticastMessage(mMsg.Data, mMsg.MCastEndpoint);
             _mcastQueue.Post(message); 
         }
@@ -29,7 +31,7 @@ namespace Recaster.Multicast.Receiver
                 var receiver = new MulticastReceiver(mgroupSetting);
                 receiver.MessageReceived += MessageReceived;
                 _receivers.Add(receiver);
-            }            
+            }
             _mcastQueue = new BufferBlock<MulticastMessage>();
         }
 

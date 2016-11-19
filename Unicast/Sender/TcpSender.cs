@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using log4net;
 using Recaster.Multicast;
 using Recaster.Endpoint;
 using Recaster.Configuration;
@@ -13,6 +14,8 @@ namespace Recaster.Unicast.Sender
 {
     public class TcpSender : ISender, IDisposable
     {
+        private static readonly ILog log = LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private TcpClient _client;
         private NetworkStream _stream;
         private IPEndPoint _endpoint;
@@ -33,7 +36,7 @@ namespace Recaster.Unicast.Sender
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception rised in Connect: {0}", ex.ToString());
+                log.Error("Exception rised in Connect", ex);
                 return false;
             }
             return _client.Connected;
@@ -72,7 +75,7 @@ namespace Recaster.Unicast.Sender
             catch (Exception ex)
             {
                 _stream.Position = 0;
-                Console.WriteLine("Exception rised in SendAsync: {0}", ex.ToString());
+                log.Error("Exception rised in SendAsync", ex);
                 if (!_client.Connected)
                     Disconnect();
             }

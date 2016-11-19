@@ -10,7 +10,6 @@ namespace Recaster.Multicast.Receiver
     {
         Task StartAsync(CancellationToken ct);
         void Stop();
-        void SetSourceQualifier(ISourceQualifier sourceQualifier);
 
         event EventHandler<MulticastMsgEventArgs> MessageReceived;
     }
