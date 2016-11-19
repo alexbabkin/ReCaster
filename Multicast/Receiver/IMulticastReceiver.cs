@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Recaster.Multicast.Receiver.SourceQualifier;
+using Recaster.Multicast.Receiver.Qualifier;
 
 namespace Recaster.Multicast.Receiver
 {

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Recaster.Multicast.Receiver.SourceQualifier
+namespace Recaster.Multicast.Receiver.Qualifier
 {
     public enum QualifierOption
     {

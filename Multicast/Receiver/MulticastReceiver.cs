@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
-using Recaster.Multicast.Receiver.SourceQualifier;
+using Recaster.Multicast.Receiver.Qualifier;
 using Recaster.Utils;
 using Recaster.Configuration;
 
@@ -16,7 +16,7 @@ namespace Recaster.Multicast.Receiver
     {
         private IPAddress _mcastGroup;
         private int _localPort;
-        private List<ISourceQualifier> _qualifier;
+        private List<ISourceQualifier> _qualifiers;
 
         private List<int> CollectNetworkInterfaceIndexes()
         {
@@ -45,7 +45,20 @@ namespace Recaster.Multicast.Receiver
         {
             _mcastGroup = IPAddress.Parse(settings.GroupAdreass);
             _localPort = settings.Port;
-            //_qualifier = settings.Qualifier;
+            _qualifiers = new List<ISourceQualifier>();
+            foreach(var q in settings.Qualifier)
+            {
+                QualifierOption qOption = QualifierOption.Accept;
+                if (q.Disacard)
+                    qOption = QualifierOption.Discard;
+
+                IPAddress qIP = null;
+                if (q.sourceIP != String.Empty)
+                    qIP = IPAddress.Parse(q.sourceIP);
+
+                var qualifier = new SourceQualifier(qIP, q.Port, qOption);
+                _qualifiers.Add(qualifier);
+            }
         }
 
         public async Task StartAsync(CancellationToken ct)
@@ -67,7 +80,7 @@ namespace Recaster.Multicast.Receiver
                     UdpReceiveResult result = await udpClient.ReceiveAsync()
                         .WithCancellation(ct)
                         .ConfigureAwait(false);
-                    if (_qualifier.All(q => q.IsSourceQualified(result.RemoteEndPoint)))
+                    if (_qualifiers.All(q => q.IsSourceQualified(result.RemoteEndPoint)))
                     {
                         MulticastMsgEventArgs e = new MulticastMsgEventArgs(
                             new IPEndPoint(_mcastGroup, _localPort), result.RemoteEndPoint, result.Buffer);
@@ -84,7 +97,7 @@ namespace Recaster.Multicast.Receiver
 
         public void SetSourceQualifier(ISourceQualifier sourceQualifier)
         {
-            _qualifier.Add(sourceQualifier);
+            _qualifiers.Add(sourceQualifier);
         }
 
         protected void OnMessageReceived(MulticastMsgEventArgs e)

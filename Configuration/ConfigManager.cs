@@ -10,10 +10,6 @@ namespace Recaster.Configuration
 {
     public class ConfigManager : IConfigManager
     {
-        private void Load()
-        {
-
-        }
         public List<MulticastGroupSettings> MCastRecvSettings
         {
             get

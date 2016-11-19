@@ -77,9 +77,9 @@
     <Compile Include="Multicast\MulticastMessage.cs" />
     <Compile Include="Multicast\Receiver\IMulticastReceiver.cs" />
     <Compile Include="Multicast\Receiver\MulticastReceiveManager.cs" />
-    <Compile Include="Multicast\Receiver\SourceQualifier\ISourceQualifier.cs" />
+    <Compile Include="Multicast\Receiver\Qualifier\ISourceQualifier.cs" />
     <Compile Include="Multicast\Receiver\MulticastReceiver.cs" />
-    <Compile Include="Multicast\Receiver\SourceQualifier\SourceQualifier.cs" />
+    <Compile Include="Multicast\Receiver\Qualifier\SourceQualifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
