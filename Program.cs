@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Recaster.Dependency;
 using Recaster.Endpoint;
-using Recaster.RemoteControl.WCF;
+using Recaster.Service;
 
 namespace Recaster
 {

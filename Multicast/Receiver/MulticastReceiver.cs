@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Recaster.Multicast.Receiver.Qualifier;
 using Recaster.Utils;
-using Recaster.Configuration;
+using Recaster.Common;
 
 namespace Recaster.Multicast.Receiver
 {

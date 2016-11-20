@@ -4,9 +4,11 @@ using System.ServiceModel;
 using System.Threading;
 using log4net;
 using Recaster.Configuration;
+using Recaster.Common;
+using Recaster.Service;
 
 
-namespace Recaster.RemoteControl.WCF
+namespace Recaster.WCF
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.Single)]
     public class WCFService : IWCFService

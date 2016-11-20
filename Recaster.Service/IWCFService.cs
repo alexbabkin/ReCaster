@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using Recaster.Configuration;
+using Recaster.Common;
 
-namespace Recaster.RemoteControl.WCF
+namespace Recaster.Service
 {
     [ServiceContract]
     public interface IWCFService

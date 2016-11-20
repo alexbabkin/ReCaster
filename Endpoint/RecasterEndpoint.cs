@@ -2,7 +2,6 @@
 using log4net;
 using System.Threading;
 using System.Threading.Tasks;
-using Recaster.RemoteControl.WCF;
 
 namespace Recaster.Endpoint
 {

@@ -6,7 +6,8 @@ using Recaster.Unicast.Sender;
 using Recaster.Unicast.Receiver;
 using Recaster.Endpoint;
 using Recaster.Configuration;
-using Recaster.RemoteControl.WCF;
+using Recaster.Service;
+using Recaster.WCF;
 
 namespace Recaster.Dependency
 {

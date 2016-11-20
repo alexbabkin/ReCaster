@@ -13,6 +13,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -63,8 +78,6 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigManager.cs" />
     <Compile Include="Configuration\IConfigManager.cs" />
-    <Compile Include="Configuration\MulticastReceiverSettings.cs" />
-    <Compile Include="Configuration\UnicastSettings.cs" />
     <Compile Include="Endpoint\IEndpoint.cs" />
     <Compile Include="Endpoint\IReceiver.cs" />
     <Compile Include="Endpoint\ISender.cs" />
@@ -75,8 +88,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RemoteControl\WCF\IWCFService.cs" />
-    <Compile Include="RemoteControl\WCF\WCFService.cs" />
     <Compile Include="Unicast\Receiver\TcpReceiver.cs" />
     <Compile Include="Unicast\Sender\TcpSender.cs" />
     <Compile Include="Utils\AsyncExtensions.cs" />
@@ -89,6 +100,7 @@
     <Compile Include="Multicast\Receiver\Qualifier\SourceQualifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WCF\WCFService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -102,6 +114,28 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Recaster.Common\Recaster.Common.csproj">
+      <Project>{bac2771b-c7fc-4abb-9a19-b4e4a4963b90}</Project>
+      <Name>Recaster.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="Recaster.Service\Recaster.Service.csproj">
+      <Project>{113e0e53-ef73-47d9-9378-1d7383077b10}</Project>
+      <Name>Recaster.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
