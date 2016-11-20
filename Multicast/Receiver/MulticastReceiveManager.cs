@@ -26,11 +26,15 @@ namespace Recaster.Multicast.Receiver
         public MulticastReceiveManager(IConfigManager config)
         {
             _receivers = new List<IMulticastReceiver>();
-            foreach (var mgroupSetting in config.MCastRecvSettings)
+            var settings = config.MCastRecvSettings;
+            if (settings != null)
             {
-                var receiver = new MulticastReceiver(mgroupSetting);
-                receiver.MessageReceived += MessageReceived;
-                _receivers.Add(receiver);
+                foreach (var mgroupSetting in settings)
+                {
+                    var receiver = new MulticastReceiver(mgroupSetting);
+                    receiver.MessageReceived += MessageReceived;
+                    _receivers.Add(receiver);
+                }
             }
             _mcastQueue = new BufferBlock<MulticastMessage>();
         }

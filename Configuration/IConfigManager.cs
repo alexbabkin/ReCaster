@@ -15,13 +15,13 @@ namespace Recaster.Configuration
     {
         EndpointType AppType { get; set; }
         List<MulticastGroupSettings> MCastRecvSettings { get; }
-        UnicastSettings UnicastRecvSettings { get;}
+        UnicastSettings UnicastRcvSettings { get;}
         UnicastSettings UnicastSndSettings { get;}
         void ApplyMulticastRcvSettings(List<MulticastGroupSettings> newSettings);
         event EventHandler<MulticastRcvSettingsEventArgs> MulticastRcvSettingsChanged;
         void ApplyUnicastRcvSettings(UnicastSettings newSettings);
         event EventHandler<UnicastRcvSettingsEventArgs> UnicastRcvSettingsChanged;
-        void ApplyUnicastSndeSettings(UnicastSettings newSettings);
+        void ApplyUnicastSndSettings(UnicastSettings newSettings);
         event EventHandler<UnicastSndSettingsEventArgs> UnicastSndeSettingsChanged;
     }
 

@@ -6,6 +6,7 @@ using Recaster.Unicast.Sender;
 using Recaster.Unicast.Receiver;
 using Recaster.Endpoint;
 using Recaster.Configuration;
+using Recaster.RemoteControl.WCF;
 
 namespace Recaster.Dependency
 {
@@ -39,6 +40,9 @@ namespace Recaster.Dependency
         private DependencyResolver():this(new StandardKernel())
         {
             _kernel.Bind<IConfigManager>().To<ConfigManager>()
+                .InSingletonScope();
+
+            _kernel.Bind<IWCFService>().To<WCFService>()
                 .InSingletonScope();
 
             _kernel.Bind<IEndpoint>().To<RecasterEndpoint>()

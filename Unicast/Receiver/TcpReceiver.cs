@@ -26,10 +26,14 @@ namespace Recaster.Unicast.Receiver
 
         public TcpReceiver(IConfigManager config)
         {
-            var ip = config.UnicastRecvSettings.IP;
-            var port = config.UnicastRecvSettings.Port;
-            var endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            _listener = new TcpListener(endpoint);
+            var settings = config.UnicastRcvSettings;
+            if (settings != null)
+            {
+                var ip = config.UnicastRcvSettings.IP;
+                var port = config.UnicastRcvSettings.Port;
+                var endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+                _listener = new TcpListener(endpoint);
+            }
             _recvQueue = new BufferBlock<MulticastMessage>();
         }
 
@@ -42,6 +46,7 @@ namespace Recaster.Unicast.Receiver
             catch (Exception ex)
             {
                 log.Error("Exception in TcpReceiver.Start", ex);
+                return;
             }
             while (true)
             {

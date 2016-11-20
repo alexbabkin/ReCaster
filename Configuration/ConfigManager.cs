@@ -32,7 +32,7 @@ namespace Recaster.Configuration
             }
         }
 
-        public UnicastSettings UnicastRecvSettings
+        public UnicastSettings UnicastRcvSettings
         {
             get
             {
@@ -73,6 +73,7 @@ namespace Recaster.Configuration
         {
             var confString = JsonConvert.SerializeObject(newSettings);
             Properties.Settings.Default.MulticastReceiverSettings = confString;
+            Properties.Settings.Default.Save();
 
             var e = new MulticastRcvSettingsEventArgs(newSettings);
             OnMulticastRcvSettingsChanged(e);
@@ -82,15 +83,17 @@ namespace Recaster.Configuration
         {
             var confString = JsonConvert.SerializeObject(newSettings);
             Properties.Settings.Default.UnicastReceiverSettings = confString;
+            Properties.Settings.Default.Save();
 
             var e = new UnicastRcvSettingsEventArgs(newSettings);
             OnUnicastRcvSettingsChanged(e);
         }
 
-        public void ApplyUnicastSndeSettings(UnicastSettings newSettings)
+        public void ApplyUnicastSndSettings(UnicastSettings newSettings)
         {
             var confString = JsonConvert.SerializeObject(newSettings);
             Properties.Settings.Default.UnicastSenderSettings = confString;
+            Properties.Settings.Default.Save();
 
             var e = new UnicastSndSettingsEventArgs(newSettings);
             OnUnicastSndeSettingsChanged(e);
