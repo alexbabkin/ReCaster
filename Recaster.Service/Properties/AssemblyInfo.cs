@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Recaster")]
+[assembly: AssemblyTitle("Recaster.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Recaster")]
+[assembly: AssemblyProduct("Recaster.Service")]
 [assembly: AssemblyCopyright("Copyright © Alexander Babkin 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,10 +19,8 @@ using System.Runtime.InteropServices;
 // COM, задайте атрибуту ComVisible значение TRUE для этого типа.
 [assembly: ComVisible(false)]
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
-
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("bec80101-aeea-4374-a84f-60647ca08c6f")]
+[assembly: Guid("113e0e53-ef73-47d9-9378-1d7383077b10")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //
