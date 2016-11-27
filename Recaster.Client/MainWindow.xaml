@@ -8,9 +8,10 @@
         Title="MainWindow" Height="350" Width="525" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -30,7 +31,9 @@
                    VerticalAlignment="Center"
                    FontSize="30"/>
         <StackPanel Orientation="Vertical" Grid.Row="1">
-            <TextBlock Text="TCP Server" HorizontalAlignment="Center"/>
+            <TextBlock Text="TCP Server" 
+                       HorizontalAlignment="Center"
+                       FontSize="15"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="IP" Margin="5"/>
                 <TextBox Width="100" Height="Auto"  Margin="5"/>
@@ -39,7 +42,9 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-            <TextBlock Text="TCP Client" HorizontalAlignment="Center"/>
+            <TextBlock Text="TCP Client" 
+                       HorizontalAlignment="Center"
+                       FontSize="15"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="IP" Margin="5"/>
                 <TextBox Width="100" Height="Auto"  Margin="5"/>
@@ -47,33 +52,50 @@
                 <TextBox Width="50" Height="Auto"  Margin="5"/>
             </StackPanel>
         </StackPanel>
-        <Button Grid.Column="0" 
-                Name="StartReceiver" 
-                Grid.Row="3" 
-                VerticalAlignment="Top" 
-                Height="30">
+        <Button Grid.Column="0"
+                Grid.Row="3"
+                Name="StartReceiver"
+                Height="Auto">
             <TextBlock Text="Start"/>
         </Button>
-        <Button Grid.Column="0" 
-                Name="StopReceiver" 
-                Grid.Row="3" 
-                VerticalAlignment="Bottom" 
-                Height="30">
+        <Button Grid.Column="0"
+                Grid.Row="4"
+                Name="StopReceiver"
+                Height="Auto">
             <TextBlock Text="Stop"/>
         </Button>
-        <Button Grid.Column="1" 
-                Name="StartSender" 
-                Grid.Row="3" 
-                VerticalAlignment="Top" 
-                Height="30">
+        <Button Grid.Column="1"
+                Grid.Row="3"
+                Name="StartSender">
             <TextBlock Text="Start"/>
         </Button>
-        <Button Grid.Column="1" 
-                Name="StopSender" 
-                Grid.Row="3" 
-                VerticalAlignment="Bottom" 
-                Height="30">
+        <Button Grid.Column="1"
+                Grid.Row="4"
+                Name="StopSender">
             <TextBlock Text="Stop"/>
         </Button>
+        <StackPanel Grid.Column="0"
+                    Grid.Row="2"
+                    Orientation="Vertical">
+            <Button Click="AddMulticastSourceButton_Click">
+                <TextBlock Name = "AddMulticastSource"
+                           Text="Add Multicast Sources"
+                           FontSize="15"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Center"/>
+            </Button>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="IP" Margin="5"/>
+                <TextBox Width="100" Height="Auto"  Margin="5"/>
+                <TextBlock Text="Port" Margin="5"/>
+                <TextBox Width="50" Height="Auto"  Margin="5"/>
+                <Button Height="25">
+                    <TextBlock Name="AddQualifier" 
+                               Text="Q" 
+                               Width="25" 
+                               TextAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

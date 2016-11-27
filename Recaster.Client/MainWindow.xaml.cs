@@ -24,5 +24,10 @@ namespace Recaster.Client
         {
             InitializeComponent();
         }
+
+        private void AddMulticastSourceButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
