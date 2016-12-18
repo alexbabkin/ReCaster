@@ -116,7 +116,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Recaster.Common\Recaster.Common.csproj">
+    <ProjectReference Include="Recaster.Common\Recaster.Common.csproj">
       <Project>{bac2771b-c7fc-4abb-9a19-b4e4a4963b90}</Project>
       <Name>Recaster.Common</Name>
     </ProjectReference>

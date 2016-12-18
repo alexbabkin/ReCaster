@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{27104E78-0BB3-4A93-A362-B84A8216BF31}</ProjectGuid>
+    <ProjectGuid>{4E79579D-7565-4FB7-894D-0A73E09B4938}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Recaster.Client</RootNamespace>
@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Recaster.Common">
-      <HintPath>..\Recaster.Common\bin\Debug\Recaster.Common.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -58,25 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\Messenger.cs" />
-    <Compile Include="SettingsProvider\IRepository.cs" />
-    <Compile Include="SettingsProvider\TestRepository.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\ISettingsPageViewModel.cs" />
-    <Compile Include="Settings\Setting.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MulticastSourceSettingsViewModel.cs" />
-    <Compile Include="ViewModels\SettingViewModel.cs" />
-    <Compile Include="ViewModels\UnicastClientSettingsViewModels.cs" />
-    <Compile Include="ViewModels\UnicastSettingsViewModel.cs" />
-    <Compile Include="Views\UnicastSettingsView.xaml.cs">
-      <DependentUpon>UnicastSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\UnicastServerSettingsViewModel.cs" />
-    <Compile Include="Views\MulticastSourcesSettingsView.xaml.cs">
-      <DependentUpon>MulticastSourcesSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -84,18 +63,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\UnicastSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MulticastSourcesSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -124,7 +95,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
