@@ -6,7 +6,7 @@ using Recaster.Client.Settings;
 
 namespace Recaster.Client.ViewModels
 {
-    public class SettingViewModel : BaseViewModel
+    public class SettingViewModel : ObservableElement
     {
         private readonly ReadOnlyCollection<SettingViewModel> _childs;
         private readonly Setting _setting;

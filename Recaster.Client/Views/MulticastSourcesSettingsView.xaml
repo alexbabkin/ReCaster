@@ -7,6 +7,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <DataGrid ItemsSource="{Binding Settings}" 
+                      AutoGenerateColumns="False"                       
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Row="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Group Adreass" Binding="{Binding GroupAdreass}"/>
+                    <DataGridTextColumn Header="Port" Binding="{Binding Port}"/>
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="Add Source" Click="MenuItem_Click"/>
+                        <MenuItem Header="Delete Source"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            <TextBlock Text="Qialifiers for ... " Grid.Row="1" HorizontalAlignment="Center"/>
+            <DataGrid ItemsSource="{Binding SelectedItem.Qualifiers}" 
+                      AutoGenerateColumns="False"
+                      VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Source IP" Binding="{Binding SourceIP}"/>
+                    <DataGridTextColumn Header="Source Port" Binding="{Binding Port}"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Discard}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

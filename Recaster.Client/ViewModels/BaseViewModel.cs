@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Recaster.Client.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class ObservableElement : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

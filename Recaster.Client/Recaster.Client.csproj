@@ -59,13 +59,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\Messenger.cs" />
-    <Compile Include="SettingsProvider\IRepository.cs" />
+    <Compile Include="SettingsProvider\IProvider.cs" />
     <Compile Include="SettingsProvider\TestRepository.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ISettingsPageViewModel.cs" />
     <Compile Include="Settings\Setting.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MulticastSourceSettingsViewModel.cs" />
+    <Compile Include="ViewModels\ObservableSrcSettings\ObservableMulticastGroupSettings.cs" />
+    <Compile Include="ViewModels\ObservableSrcSettings\ObservableQualifierSettings.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\UnicastClientSettingsViewModels.cs" />
     <Compile Include="ViewModels\UnicastSettingsViewModel.cs" />

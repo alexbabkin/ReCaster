@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Recaster.Client.ViewModels
 {
-    public abstract class UnicastSettingsViewModel : BaseViewModel, ISettingsPageViewModel
+    public abstract class UnicastSettingsViewModel : ObservableElement, ISettingsPageViewModel
     {
         protected UnicastSettings _settings;
         protected string _title;

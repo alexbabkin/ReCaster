@@ -7,6 +7,6 @@ namespace Recaster.Common
     {
         public string sourceIP { get; set; } = String.Empty;
         public int Port { get; set; } = 0;
-        public bool Disacard { get; set; }
+        public bool Discard { get; set; }
     }
 }
