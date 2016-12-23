@@ -58,7 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\Messenger.cs" />
+    <Compile Include="Utility\CustomCommand.cs" />
+    <Compile Include="Utility\Messenger.cs" />
     <Compile Include="SettingsProvider\IProvider.cs" />
     <Compile Include="SettingsProvider\TestRepository.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

@@ -4,13 +4,50 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Recaster.Client.ViewModels.ObservableSrcSettings;
 using System.Collections.Specialized;
+using System.Windows.Input;
+using System;
+using Recaster.Client.Utility;
 
 namespace Recaster.Client.ViewModels
 {
     public class MulticastSourcesSettingsViewModel : ObservableElement, ISettingsPageViewModel
     {
         private ObservableCollection<ObservableMulticastGroupSettings> _settings;
-        private ObservableMulticastGroupSettings _selectedItem;
+        private ObservableMulticastGroupSettings _selectedSource;
+
+        private void LoadCommand()
+        {
+            AddSourceCommand = new CustomCommand(AddSource, CanAddSource);
+            DeleteSourceCommand = new CustomCommand(DeleteSource, CanDeleteSource);
+        }
+
+        private bool CanDeleteSource(object obj)
+        {
+            return _selectedSource != null;
+        }
+
+        private void DeleteSource(object obj)
+        {
+            _settings.Remove(_selectedSource);
+            SelectedSource = null;
+        }
+
+        private void AddSource(object obj)
+        {
+            var newSource = new MulticastGroupSettings()
+            {
+                Name = "Name",
+                GroupAdreass = "::1",
+                Port = 0,
+                Qualifier = new List<QualifierSettings>()
+            };
+            _settings.Add(new ObservableMulticastGroupSettings(newSource));
+        }
+
+        private bool CanAddSource(object obj)
+        {
+            return true;
+        }
 
         public MulticastSourcesSettingsViewModel(IProvider settingsProvider)
         {
@@ -22,7 +59,7 @@ namespace Recaster.Client.ViewModels
                 var s = new ObservableMulticastGroupSettings(sourceSetting);
                 _settings.Add(s);
             }
-            _selectedItem = _settings[0];
+            LoadCommand();
         }
 
         public string Title
@@ -35,9 +72,20 @@ namespace Recaster.Client.ViewModels
             get { return _settings; }
         }
 
-        public ObservableMulticastGroupSettings SelectedItem
+        public ObservableMulticastGroupSettings SelectedSource
         {
-            get { return _selectedItem; }
+            get { return _selectedSource; }
+            set
+            {
+                if (_selectedSource != value)
+                {
+                    _selectedSource = value;
+                    OnPropertyChanged("SelectedSource");
+                }
+            }
         }
+
+        public ICommand AddSourceCommand { get; set; }
+        public ICommand DeleteSourceCommand { get; set; }
     }    
 }

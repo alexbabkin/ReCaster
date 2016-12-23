@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Recaster.Client.Helpers;
+using Recaster.Client.Utility;
 using Recaster.Client.Settings;
 
 namespace Recaster.Client.ViewModels

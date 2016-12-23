@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 //Messenger downloaded from StackOverflow and small modifications made
-namespace Recaster.Client.Helpers
+namespace Recaster.Client.Utility
 {
     public class Messenger
     {

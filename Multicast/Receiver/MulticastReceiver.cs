@@ -49,7 +49,7 @@ namespace Recaster.Multicast.Receiver
             foreach(var q in settings.Qualifier)
             {
                 QualifierOption qOption = QualifierOption.Accept;
-                if (q.Disacard)
+                if (q.Discard)
                     qOption = QualifierOption.Discard;
 
                 IPAddress qIP = null;

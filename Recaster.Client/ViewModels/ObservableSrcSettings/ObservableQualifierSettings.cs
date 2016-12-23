@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Recaster.Common;
+using System.Windows.Input;
 
 namespace Recaster.Client.ViewModels.ObservableSrcSettings
 {
@@ -52,6 +53,6 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
                     OnPropertyChanged("Discard");
                 }
             }
-        }
+        }        
     }
 }

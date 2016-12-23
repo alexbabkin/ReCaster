@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Recaster.Client.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -16,7 +17,9 @@
             <DataGrid ItemsSource="{Binding Settings}" 
                       AutoGenerateColumns="False"                       
                       VerticalScrollBarVisibility="Auto"
-                      Grid.Row="0">
+                      Grid.Row="0"
+                      SelectionMode="Single"
+                      SelectedItem="{Binding SelectedSource}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Group Adreass" Binding="{Binding GroupAdreass}"/>
@@ -24,21 +27,32 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu >
-                        <MenuItem Header="Add Source" Click="MenuItem_Click"/>
-                        <MenuItem Header="Delete Source"/>
+                        <MenuItem Header="Add Source" Command="{Binding AddSourceCommand}"/>
+                        <MenuItem Header="Delete Source" Command="{Binding DeleteSourceCommand}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
-            <TextBlock Text="Qialifiers for ... " Grid.Row="1" HorizontalAlignment="Center"/>
-            <DataGrid ItemsSource="{Binding SelectedItem.Qualifiers}" 
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+                <TextBlock Text="Qialifiers for"/>
+                <TextBlock Text="{Binding SelectedSource.Name}"/>
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding SelectedSource.Qualifiers}" 
                       AutoGenerateColumns="False"
                       VerticalScrollBarVisibility="Auto"
-                      Grid.Row="2">
+                      Grid.Row="2"
+                      SelectionMode="Single"
+                      SelectedItem="{Binding SelectedSource.SelectedQualifier}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Source IP" Binding="{Binding SourceIP}"/>
                     <DataGridTextColumn Header="Source Port" Binding="{Binding Port}"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding Discard}"/>
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu >
+                        <MenuItem Header="Add Qualifier" Command="{Binding SelectedSource.AddQualifierCommand}"/>
+                        <MenuItem Header="Delete Qualifier" Command="{Binding SelectedSource.DeleteQualifierCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
         </Grid>
     </Grid>

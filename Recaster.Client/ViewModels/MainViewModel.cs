@@ -1,6 +1,6 @@
 ﻿using Recaster.Client.Settings;
 using System.Collections.ObjectModel;
-using Recaster.Client.Helpers;
+using Recaster.Client.Utility;
 using System.ComponentModel;
 using Recaster.Client.SettingsProvider;
 
