@@ -61,20 +61,20 @@ namespace Recaster.Client.ViewModels
                 });
 
             LoadCommands();
-            Messenger.Default.Register<SettingsViewModel>(this, OnPageSelected);
+            Messenger.Default.Register<SettingsViewModel>(this, OnSelectedSetting);
         }
 
-        private void OnPageSelected(SettingsViewModel selectedPage)
+        private void OnSelectedSetting(SettingsViewModel selectedPage)
         {
             switch (selectedPage.Title)
             {
-                case "Tcp Server":
+                case SettingType.UdpServerSettings:
                     CurrentPage = _unicastServerSettingsVM;
                     break;
-                case "Tcp Client":
+                case SettingType.UdpClientSettings:
                     CurrentPage = _unicastClientSettingsVM;
                     break;
-                case "Multicast Sources":
+                case SettingType.MulticastSourceSettings:
                     CurrentPage = _multicastSourcesSettingsVM;
                     break;
                 default:
