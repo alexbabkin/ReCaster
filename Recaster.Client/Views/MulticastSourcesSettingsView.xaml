@@ -41,7 +41,7 @@
                       VerticalScrollBarVisibility="Auto"
                       Grid.Row="2"
                       SelectionMode="Single"
-                      SelectedItem="{Binding SelectedSource.SelectedQualifier}">
+                      SelectedItem="{Binding SelectedQualifier}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Source IP" Binding="{Binding SourceIP}"/>
                     <DataGridTextColumn Header="Source Port" Binding="{Binding Port}"/>
@@ -49,8 +49,8 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu >
-                        <MenuItem Header="Add Qualifier" Command="{Binding SelectedSource.AddQualifierCommand}"/>
-                        <MenuItem Header="Delete Qualifier" Command="{Binding SelectedSource.DeleteQualifierCommand}"/>
+                        <MenuItem Header="Add Qualifier" Command="{Binding AddQualifierCommand}"/>
+                        <MenuItem Header="Delete Qualifier" Command="{Binding DeleteQualifierCommand}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>

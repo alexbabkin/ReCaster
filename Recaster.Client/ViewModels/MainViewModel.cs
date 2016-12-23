@@ -3,19 +3,45 @@ using System.Collections.ObjectModel;
 using Recaster.Client.Utility;
 using System.ComponentModel;
 using Recaster.Client.SettingsProvider;
+using System.Windows.Input;
+using System;
 
 namespace Recaster.Client.ViewModels
 {
     public class MainViewModel : ObservableElement
     {
         private readonly IProvider _settingsProvider;
-        private readonly ReadOnlyCollection<SettingViewModel> _topLevelSettings;
+        private readonly ReadOnlyCollection<SettingsViewModel> _topLevelSettings;
         private readonly ISettingsPageViewModel _unicastServerSettingsVM;
         private readonly ISettingsPageViewModel _unicastClientSettingsVM;
         private readonly ISettingsPageViewModel _multicastSourcesSettingsVM;
-
         private ISettingsPageViewModel _currentPage;
-        
+
+        private void LoadCommands()
+        {
+            ChangeReceiverStateCoammnd = new CustomCommand(ChangeReceiverState, CanChangeReiverState);
+            ChangeSenderStateCommand = new CustomCommand(ChangeSenderState, CanChangeSenderState);
+        }
+
+        private bool CanChangeSenderState(object obj)
+        {
+            return false;
+        }
+
+        private bool CanChangeReiverState(object obj)
+        {
+            return false;
+        }
+
+        private void ChangeSenderState(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ChangeReceiverState(object obj)
+        {
+            throw new NotImplementedException();
+        }
 
         public MainViewModel()
         {
@@ -27,17 +53,18 @@ namespace Recaster.Client.ViewModels
             var receiverSettings = Setting.GetReceiverRoot();
             var senderSettings = Setting.GetSenderRoot();
 
-            _topLevelSettings = new ReadOnlyCollection<SettingViewModel>(
-                new SettingViewModel[]
+            _topLevelSettings = new ReadOnlyCollection<SettingsViewModel>(
+                new SettingsViewModel[]
                 {
-                    new SettingViewModel(receiverSettings),
-                    new SettingViewModel(senderSettings)
+                    new SettingsViewModel(receiverSettings),
+                    new SettingsViewModel(senderSettings)
                 });
-            
-            Messenger.Default.Register<SettingViewModel>(this, OnPageSelected);
+
+            LoadCommands();
+            Messenger.Default.Register<SettingsViewModel>(this, OnPageSelected);
         }
 
-        private void OnPageSelected(SettingViewModel selectedPage)
+        private void OnPageSelected(SettingsViewModel selectedPage)
         {
             switch (selectedPage.Title)
             {
@@ -56,7 +83,7 @@ namespace Recaster.Client.ViewModels
             }
         }
 
-        public ReadOnlyCollection<SettingViewModel> TopLevelSettings { get { return _topLevelSettings; } }
+        public ReadOnlyCollection<SettingsViewModel> TopLevelSettings { get { return _topLevelSettings; } }
         public ISettingsPageViewModel CurrentPage
         {
             get
@@ -72,5 +99,8 @@ namespace Recaster.Client.ViewModels
                 }
             }
         }
+
+        public ICommand ChangeReceiverStateCoammnd { get; set; }
+        public ICommand ChangeSenderStateCommand { get; set; }
     }
 }

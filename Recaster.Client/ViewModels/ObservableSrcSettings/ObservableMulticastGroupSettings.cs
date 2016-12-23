@@ -15,42 +15,6 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
     {
         private MulticastGroupSettings _settings;
         private ObservableCollection<ObservableQualifierSettings> _qualifiers;
-        private ObservableQualifierSettings _selectedQualifier;
-
-        private void LoadCommands()
-        {
-            AddQualifierCommand = new CustomCommand(AddQualifier, CanAddQualifier);
-            DeleteQualifierCommand = new CustomCommand(DeleteQualifier, CanDeleteQualifier);
-        }
-
-        private bool CanDeleteQualifier(object obj)
-        {
-            return _selectedQualifier != null;
-
-        }
-
-        private void DeleteQualifier(object obj)
-        {
-            if (_selectedQualifier != null)
-                _qualifiers.Remove(_selectedQualifier);
-            SelectedQualifier = null;
-        }
-
-        private bool CanAddQualifier(object obj)
-        {
-            return true;
-        }
-
-        private void AddQualifier(object obj)
-        {
-            var newQualifier = new QualifierSettings()
-            {
-                sourceIP = "::12",
-                Port = 0,
-                Discard = true
-            };
-            _qualifiers.Add(new ObservableQualifierSettings(newQualifier));
-        }
 
         public ObservableMulticastGroupSettings(MulticastGroupSettings settings)
         {
@@ -61,7 +25,6 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
                 var observableQ = new ObservableQualifierSettings(q);
                 _qualifiers.Add(observableQ);
             }
-            LoadCommands();
             _qualifiers.CollectionChanged += _qualifiers_CollectionChanged;
         }
 
@@ -130,21 +93,5 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
         {
             get { return _qualifiers; }
         }
-
-        public ObservableQualifierSettings SelectedQualifier
-        {
-            get { return _selectedQualifier; }
-            set
-            {
-                if (_selectedQualifier != value)
-                {
-                    _selectedQualifier = value;
-                    OnPropertyChanged("SelectedQualifier");
-                }
-            }
-        }
-
-        public ICommand AddQualifierCommand { get; set; }
-        public ICommand DeleteQualifierCommand { get; set; }
     }
 }

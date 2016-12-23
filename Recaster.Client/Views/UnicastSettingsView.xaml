@@ -12,14 +12,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions >
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="IP: "/>
-            <TextBox Text="{Binding Ip}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text="port: "/>
-            <TextBox Text="{Binding Port}"/>
+            <TextBlock Text="IP: " Margin="30, 0, 10 , 0"/>
+            <TextBox Text="{Binding Ip}" Margin="10, 0, 10 , 0"/>
+            <TextBlock Text="Port: " Margin="30, 0, 10 , 0"/>
+            <TextBox Text="{Binding Port}" Margin="10, 0, 10 , 0"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -19,6 +19,36 @@ namespace Recaster.Client.ViewModels
         {
             AddSourceCommand = new CustomCommand(AddSource, CanAddSource);
             DeleteSourceCommand = new CustomCommand(DeleteSource, CanDeleteSource);
+            AddQualifierCommand = new CustomCommand(AddQualifier, CanAddQualifier);
+            DeleteQualifierCommand = new CustomCommand(DeleteQualifier, CanDeleteQualifier);
+        }
+
+        private bool CanDeleteQualifier(object obj)
+        {
+            return (_selectedSource != null) && (SelectedQualifier != null);
+        }
+
+        private void DeleteQualifier(object obj)
+        {
+            if (SelectedQualifier != null)
+                _selectedSource.Qualifiers.Remove(SelectedQualifier);
+            SelectedQualifier = null;
+        }
+
+        private bool CanAddQualifier(object obj)
+        {
+            return _selectedSource != null;
+        }
+
+        private void AddQualifier(object obj)
+        {
+            var newQualifier = new QualifierSettings()
+            {
+                sourceIP = "::12",
+                Port = 0,
+                Discard = true
+            };
+            _selectedSource.Qualifiers.Add(new ObservableQualifierSettings(newQualifier));
         }
 
         private bool CanDeleteSource(object obj)
@@ -84,8 +114,12 @@ namespace Recaster.Client.ViewModels
                 }
             }
         }
+        
+        public ObservableQualifierSettings SelectedQualifier { get; set; }
 
         public ICommand AddSourceCommand { get; set; }
         public ICommand DeleteSourceCommand { get; set; }
+        public ICommand AddQualifierCommand { get; set; }
+        public ICommand DeleteQualifierCommand { get; set; }
     }    
 }

@@ -6,22 +6,22 @@ using Recaster.Client.Settings;
 
 namespace Recaster.Client.ViewModels
 {
-    public class SettingViewModel : ObservableElement
+    public class SettingsViewModel : ObservableElement
     {
-        private readonly ReadOnlyCollection<SettingViewModel> _childs;
+        private readonly ReadOnlyCollection<SettingsViewModel> _childs;
         private readonly Setting _setting;
         private bool _isSelected;
         private bool _isExpanded;
 
-        public SettingViewModel(Setting setting)
+        public SettingsViewModel(Setting setting)
         {
             _setting = setting;
-            _childs = new ReadOnlyCollection<SettingViewModel>(
+            _childs = new ReadOnlyCollection<SettingsViewModel>(
                 (from child in _setting.ChildSettings
-                 select new SettingViewModel(child)).ToList());                                
+                 select new SettingsViewModel(child)).ToList());                                
         }
 
-        public ReadOnlyCollection<SettingViewModel> Childs { get { return _childs; } }
+        public ReadOnlyCollection<SettingsViewModel> Childs { get { return _childs; } }
 
         public string Title { get { return _setting.Title; } }
 
@@ -47,7 +47,7 @@ namespace Recaster.Client.ViewModels
                 {
                     _isSelected = value;
                     OnPropertyChanged("IsSelected");
-                    Messenger.Default.Send<SettingViewModel>(this);
+                    Messenger.Default.Send<SettingsViewModel>(this);
                 }
             }
         }
