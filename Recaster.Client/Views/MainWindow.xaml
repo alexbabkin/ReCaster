@@ -38,7 +38,7 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Childs}">
-                    <TextBlock Text="{Binding Title}" />
+                    <TextBlock Text="{Binding SettingTitle}" />
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>

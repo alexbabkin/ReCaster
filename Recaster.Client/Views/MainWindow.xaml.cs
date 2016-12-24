@@ -1,5 +1,6 @@
 ﻿using Recaster.Client.ViewModels;
 using System.Windows;
+using Recaster.Client.Dependency;
 
 namespace Recaster.Client.Views
 {
@@ -8,17 +9,17 @@ namespace Recaster.Client.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MainViewModel _settingsTree;
+        private readonly MainViewModel mainVM;
         public MainWindow()
         {
             InitializeComponent();
 
             // Create UI-friendly wrappers around the 
             // raw data objects (i.e. the view-model).
-            _settingsTree = new MainViewModel();
+            mainVM = DependencyResolver.Get<MainViewModel>();
 
             // Let the UI bind to the view-model.
-            DataContext = _settingsTree;
+            DataContext = mainVM;
         }
     }
 }

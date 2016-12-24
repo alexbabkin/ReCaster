@@ -23,7 +23,9 @@ namespace Recaster.Client.ViewModels
 
         public ReadOnlyCollection<SettingsViewModel> Childs { get { return _childs; } }
 
-        public SettingType Title { get { return _setting.Type; } }
+        public SettingType SettingType { get { return _setting.Type; } }
+
+        public string SettingTitle { get { return _setting.Title; } }
 
         public bool IsExpanded
         {
