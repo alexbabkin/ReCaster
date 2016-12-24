@@ -13,7 +13,7 @@ namespace Recaster.Client.ViewModels
         private bool _isSelected;
         private bool _isExpanded;
 
-        public SettingsViewModel(Setting setting)
+        private SettingsViewModel(Setting setting)
         {
             _setting = setting;
             _childs = new ReadOnlyCollection<SettingsViewModel>(
@@ -52,6 +52,27 @@ namespace Recaster.Client.ViewModels
                     Messenger.Default.Send<SettingsViewModel>(this);
                 }
             }
+        }
+
+        public static ReadOnlyCollection<SettingsViewModel> GetTopLevelSettings()
+        {
+            Setting receiverSettings = new Setting(SettingType.ReceiverSettings);
+            Setting child = new Setting(SettingType.UdpClientSettings);
+            receiverSettings.ChildSettings.Add(child);
+            child = new Setting(SettingType.MulticastSourceSettings);
+            receiverSettings.ChildSettings.Add(child);
+
+            Setting senderSettings = new Setting(SettingType.SenderSettings);
+            child = new Setting(SettingType.UdpServerSettings);
+            senderSettings.ChildSettings.Add(child);
+
+            var topLevelSettings = new ReadOnlyCollection<SettingsViewModel>(
+                new SettingsViewModel[]
+                {
+                    new SettingsViewModel(receiverSettings),
+                    new SettingsViewModel(senderSettings)
+                });
+            return topLevelSettings;
         }
     }
 }

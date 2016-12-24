@@ -14,22 +14,9 @@ namespace Recaster.Client.ViewModels
         private readonly ISettingsPageViewModel _unicastServerSettingsVM;
         private readonly ISettingsPageViewModel _unicastClientSettingsVM;
         private readonly ISettingsPageViewModel _multicastSourceSettingsVM;
-
+        private readonly ReadOnlyCollection<SettingsViewModel> _topLevelSettings;
         private ISettingsPageViewModel _currentPage;
-        private ReadOnlyCollection<SettingsViewModel> _topLevelSettings;
-
-        private void LoadTopLevelSettings()
-        {
-            var receiverSettings = Setting.GetReceiverRoot();
-            var senderSettings = Setting.GetSenderRoot();
-
-            _topLevelSettings = new ReadOnlyCollection<SettingsViewModel>(
-                new SettingsViewModel[]
-                {
-                    new SettingsViewModel(receiverSettings),
-                    new SettingsViewModel(senderSettings)
-                });
-        }
+        
 
         private void LoadCommands()
         {
@@ -57,7 +44,8 @@ namespace Recaster.Client.ViewModels
             throw new NotImplementedException();
         }
 
-        public MainViewModel(IProvider settingsProvider, 
+        public MainViewModel(IProvider settingsProvider,
+            ReadOnlyCollection<SettingsViewModel> topLevelSettingsVM,
             UnicastClientSettingsViewModel unicastClientSettingsVM, 
             UnicastServerSettingsViewModel unicastServerSettingsVM, 
             MulticastSourcesSettingsViewModel multicastSourceSettingsVM)
@@ -66,8 +54,8 @@ namespace Recaster.Client.ViewModels
             _unicastServerSettingsVM = unicastServerSettingsVM;
             _unicastClientSettingsVM = unicastClientSettingsVM;
             _multicastSourceSettingsVM = multicastSourceSettingsVM;
+            _topLevelSettings = topLevelSettingsVM;
 
-            LoadTopLevelSettings();
             LoadCommands();
 
             Messenger.Default.Register<SettingsViewModel>(this, OnSelectedSetting);

@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using Recaster.Client.ViewModels;
 using Recaster.Client.SettingsProvider;
+using System.Collections.ObjectModel;
 
 namespace Recaster.Client.Dependency
 {
@@ -42,6 +43,8 @@ namespace Recaster.Client.Dependency
             _kernel.Bind<UnicastServerSettingsViewModel>().ToSelf()
                 .InSingletonScope();
             _kernel.Bind<IProvider>().To<TestProvider>()
+                .InSingletonScope();
+            _kernel.Bind<ReadOnlyCollection<SettingsViewModel>>().ToMethod(x => SettingsViewModel.GetTopLevelSettings())
                 .InSingletonScope();
         }
 

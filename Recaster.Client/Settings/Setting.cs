@@ -16,11 +16,11 @@ namespace Recaster.Client.Settings
         private readonly string _title;
         private readonly SettingType _type;
 
+        public List<Setting> ChildSettings { get { return _childSettings; } }
+
         public string Title { get { return _title; } }
 
-        public SettingType Type { get { return _type; } }
-
-        public List<Setting> ChildSettings { get { return _childSettings; } }
+        public SettingType Type { get { return _type; } }        
 
         public Setting(SettingType type)
         {
@@ -44,25 +44,6 @@ namespace Recaster.Client.Settings
                     _title = "Udp Server";
                     break;
             }
-        }
-
-
-        public static Setting GetReceiverRoot()
-        {
-            Setting parent = new Setting(SettingType.ReceiverSettings);
-            Setting child = new Setting(SettingType.UdpClientSettings);
-            parent.ChildSettings.Add(child);
-            child = new Setting(SettingType.MulticastSourceSettings);
-            parent.ChildSettings.Add(child);
-            return parent;
-        }
-
-        public static Setting GetSenderRoot()
-        {
-            Setting parent = new Setting(SettingType.SenderSettings);
-            Setting child = new Setting(SettingType.UdpServerSettings);
-            parent.ChildSettings.Add(child);
-            return parent;
         }
     }
 }
