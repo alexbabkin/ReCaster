@@ -27,14 +27,11 @@ namespace Recaster.Multicast.Receiver
         {
             _receivers = new List<IMulticastReceiver>();
             var settings = config.MCastRecvSettings;
-            if (settings != null)
+            foreach (var mgroupSetting in settings)
             {
-                foreach (var mgroupSetting in settings)
-                {
-                    var receiver = new MulticastReceiver(mgroupSetting);
-                    receiver.MessageReceived += MessageReceived;
-                    _receivers.Add(receiver);
-                }
+                var receiver = new MulticastReceiver(mgroupSetting);
+                receiver.MessageReceived += MessageReceived;
+                _receivers.Add(receiver);
             }
             _mcastQueue = new BufferBlock<MulticastMessage>();
         }

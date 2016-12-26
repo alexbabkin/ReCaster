@@ -13,7 +13,7 @@ namespace Recaster.Service
         void Stop();
 
         [OperationContract]
-        void StartEndpoint();        
+        void StartEndpoint(EndpointType endpoinType);        
         event Action EndpointStarted;
 
         [OperationContract]
@@ -25,6 +25,18 @@ namespace Recaster.Service
 
         [OperationContract]
         List<MulticastGroupSettings> GetMulticastRcvSettings();
+
+        [OperationContract]
+        void SetUnicastServerSettings(UnicastSettings settings);
+
+        [OperationContract]
+        UnicastSettings GetUnicastServerSettings();
+
+        [OperationContract]
+        void SetUnicastClientSettings(UnicastSettings settings);
+
+        [OperationContract]
+        UnicastSettings GetUnicastClientSettings();
 
     }
 }

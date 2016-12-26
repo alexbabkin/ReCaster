@@ -13,7 +13,12 @@ namespace Recaster.Configuration
             get
             {
                 var confString = Properties.Settings.Default.MulticastReceiverSettings;
-                return JsonConvert.DeserializeObject<List<MulticastGroupSettings>>(confString);
+                var settings = JsonConvert.DeserializeObject<List<MulticastGroupSettings>>(confString);
+                if (settings == null)
+                {
+                    settings = new List<MulticastGroupSettings>();
+                }
+                return settings;
             }
         }
 
@@ -30,21 +35,31 @@ namespace Recaster.Configuration
             }
         }
 
-        public UnicastSettings UnicastRcvSettings
+        public UnicastSettings UnicastServerSettings
         {
             get
             {
                 var confString = Properties.Settings.Default.UnicastReceiverSettings;
-                return JsonConvert.DeserializeObject<UnicastSettings>(confString);
+                var settings = JsonConvert.DeserializeObject<UnicastSettings>(confString);
+                if (settings == null)
+                {
+                    settings = new UnicastSettings();
+                }
+                return settings;
             }
         }
 
-        public UnicastSettings UnicastSndSettings
+        public UnicastSettings UnicastClientSettings
         {
             get
             {
                 var confString = Properties.Settings.Default.UnicastSenderSettings;
-                return JsonConvert.DeserializeObject<UnicastSettings>(confString);
+                var settings = JsonConvert.DeserializeObject<UnicastSettings>(confString);
+                if (settings == null)
+                {
+                    settings = new UnicastSettings();
+                }
+                return settings;
             }
         }
 

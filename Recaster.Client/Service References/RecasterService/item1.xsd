@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Recaster.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Recaster.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="EndpointType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MulticastCatcher" />
+      <xs:enumeration value="MulitcastReceiver" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EndpointType" nillable="true" type="tns:EndpointType" />
+  <xs:complexType name="ArrayOfMulticastGroupSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MulticastGroupSettings" nillable="true" type="tns:MulticastGroupSettings" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMulticastGroupSettings" nillable="true" type="tns:ArrayOfMulticastGroupSettings" />
+  <xs:complexType name="MulticastGroupSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GroupAdreass" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Port" type="xs:int" />
+      <xs:element minOccurs="0" name="Qualifier" nillable="true" type="tns:ArrayOfQualifierSettings" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MulticastGroupSettings" nillable="true" type="tns:MulticastGroupSettings" />
+  <xs:complexType name="ArrayOfQualifierSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="QualifierSettings" nillable="true" type="tns:QualifierSettings" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfQualifierSettings" nillable="true" type="tns:ArrayOfQualifierSettings" />
+  <xs:complexType name="QualifierSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Discard" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Port" type="xs:int" />
+      <xs:element minOccurs="0" name="sourceIP" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QualifierSettings" nillable="true" type="tns:QualifierSettings" />
+  <xs:complexType name="UnicastSettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Port" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnicastSettings" nillable="true" type="tns:UnicastSettings" />
+</xs:schema>

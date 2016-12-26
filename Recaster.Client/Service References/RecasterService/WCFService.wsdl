@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WCFService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IWCFService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:14050/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:14050/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:14050/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Recaster.Common" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWCFService_StartEndpoint_InputMessage">
+    <wsdl:part name="parameters" element="tns:StartEndpoint" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_StartEndpoint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StartEndpointResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_StopEndpoint_InputMessage">
+    <wsdl:part name="parameters" element="tns:StopEndpoint" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_StopEndpoint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StopEndpointResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_SetMulticastRcvSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetMulticastRcvSettings" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_SetMulticastRcvSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetMulticastRcvSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_GetMulticastRcvSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMulticastRcvSettings" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_GetMulticastRcvSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMulticastRcvSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_SetUnicastServerSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetUnicastServerSettings" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_SetUnicastServerSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetUnicastServerSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_GetUnicastServerSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnicastServerSettings" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_GetUnicastServerSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnicastServerSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_SetUnicastClientSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetUnicastClientSettings" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_SetUnicastClientSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetUnicastClientSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_GetUnicastClientSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnicastClientSettings" />
+  </wsdl:message>
+  <wsdl:message name="IWCFService_GetUnicastClientSettings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnicastClientSettingsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWCFService">
+    <wsdl:operation name="StartEndpoint">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/StartEndpoint" message="tns:IWCFService_StartEndpoint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/StartEndpointResponse" message="tns:IWCFService_StartEndpoint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="StopEndpoint">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/StopEndpoint" message="tns:IWCFService_StopEndpoint_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/StopEndpointResponse" message="tns:IWCFService_StopEndpoint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetMulticastRcvSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/SetMulticastRcvSettings" message="tns:IWCFService_SetMulticastRcvSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/SetMulticastRcvSettingsResponse" message="tns:IWCFService_SetMulticastRcvSettings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMulticastRcvSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/GetMulticastRcvSettings" message="tns:IWCFService_GetMulticastRcvSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/GetMulticastRcvSettingsResponse" message="tns:IWCFService_GetMulticastRcvSettings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUnicastServerSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/SetUnicastServerSettings" message="tns:IWCFService_SetUnicastServerSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/SetUnicastServerSettingsResponse" message="tns:IWCFService_SetUnicastServerSettings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUnicastServerSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/GetUnicastServerSettings" message="tns:IWCFService_GetUnicastServerSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/GetUnicastServerSettingsResponse" message="tns:IWCFService_GetUnicastServerSettings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetUnicastClientSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/SetUnicastClientSettings" message="tns:IWCFService_SetUnicastClientSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/SetUnicastClientSettingsResponse" message="tns:IWCFService_SetUnicastClientSettings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUnicastClientSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWCFService/GetUnicastClientSettings" message="tns:IWCFService_GetUnicastClientSettings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWCFService/GetUnicastClientSettingsResponse" message="tns:IWCFService_GetUnicastClientSettings_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IWCFService" type="tns:IWCFService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="StartEndpoint">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/StartEndpoint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopEndpoint">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/StopEndpoint" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMulticastRcvSettings">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/SetMulticastRcvSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMulticastRcvSettings">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/GetMulticastRcvSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUnicastServerSettings">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/SetUnicastServerSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnicastServerSettings">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/GetUnicastServerSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUnicastClientSettings">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/SetUnicastClientSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnicastClientSettings">
+      <soap:operation soapAction="http://tempuri.org/IWCFService/GetUnicastClientSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IWCFService" type="tns:IWCFService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IWCFService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="StartEndpoint">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/StartEndpoint" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StopEndpoint">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/StopEndpoint" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetMulticastRcvSettings">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/SetMulticastRcvSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMulticastRcvSettings">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/GetMulticastRcvSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUnicastServerSettings">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/SetUnicastServerSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnicastServerSettings">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/GetUnicastServerSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetUnicastClientSettings">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/SetUnicastClientSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnicastClientSettings">
+      <soap12:operation soapAction="http://tempuri.org/IWCFService/GetUnicastClientSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WCFService">
+    <wsdl:port name="BasicHttpBinding_IWCFService" binding="tns:BasicHttpBinding_IWCFService">
+      <soap:address location="http://localhost:14050/Recaster" />
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IWCFService" binding="tns:NetTcpBinding_IWCFService">
+      <soap12:address location="net.tcp://localhost:14051/Recaster" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:14051/Recaster</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>Alex-PC\Alex</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -3,9 +3,7 @@ using Recaster.Client.SettingsProvider;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Recaster.Client.ViewModels.ObservableSrcSettings;
-using System.Collections.Specialized;
 using System.Windows.Input;
-using System;
 using Recaster.Client.Utility;
 
 namespace Recaster.Client.ViewModels

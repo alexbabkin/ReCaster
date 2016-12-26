@@ -1,10 +1,4 @@
-﻿using Recaster.Client.SettingsProvider;
-using Recaster.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Recaster.Common;
 
 namespace Recaster.Client.ViewModels
 {

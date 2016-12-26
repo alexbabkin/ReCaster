@@ -33,7 +33,27 @@ namespace Recaster.WCF
             throw new NotImplementedException();
         }
 
-        public void StartEndpoint()
+        public void SetUnicastServerSettings(UnicastSettings settings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UnicastSettings GetUnicastServerSettings()
+        {
+            return _config.UnicastServerSettings;
+        }
+
+        public void SetUnicastClientSettings(UnicastSettings settings)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UnicastSettings GetUnicastClientSettings()
+        {
+            return _config.UnicastClientSettings;
+        }
+
+        public void StartEndpoint(EndpointType endpoinT)
         {
             OnEndpointStarted();
         }

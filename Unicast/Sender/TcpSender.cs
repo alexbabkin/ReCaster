@@ -22,13 +22,10 @@ namespace Recaster.Unicast.Sender
 
         public TcpSender(IConfigManager config)
         {
-            var settigs = config.UnicastSndSettings;
-            if (settigs != null)
-            {
-                var ip = config.UnicastSndSettings.IP;
-                var port = config.UnicastSndSettings.Port;
-                _endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
-            }
+            var settigs = config.UnicastClientSettings;
+            var ip = config.UnicastClientSettings.IP;
+            var port = config.UnicastClientSettings.Port;
+           _endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
         }
 
         private async Task<bool> Connect()

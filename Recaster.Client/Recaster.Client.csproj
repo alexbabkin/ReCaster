@@ -43,6 +43,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,11 +64,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Dependency\DependencyResolver.cs" />
+    <Compile Include="Service References\RecasterService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsProvider\WCFProvider.cs" />
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="Utility\Messenger.cs" />
     <Compile Include="SettingsProvider\IProvider.cs" />
-    <Compile Include="SettingsProvider\TestRepository.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="SettingsProvider\TestProvider.cs" />
+    <Compile Include="ViewModels\ObservableElement.cs" />
     <Compile Include="ViewModels\ISettingsPageViewModel.cs" />
     <Compile Include="Settings\Setting.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -122,16 +130,48 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\Recaster.Common.MulticastGroupSettings.datasource" />
+    <None Include="Properties\DataSources\Recaster.Common.UnicastSettings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\RecasterService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RecasterService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RecasterService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\RecasterService\WCFService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\RecasterService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecasterService\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecasterService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecasterService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\RecasterService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

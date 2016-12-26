@@ -2,6 +2,8 @@
 using Recaster.Dependency;
 using Recaster.Endpoint;
 using Recaster.Service;
+using System.ServiceModel;
+using Recaster.WCF;
 
 namespace Recaster
 {
@@ -13,12 +15,15 @@ namespace Recaster
         static void Main(string[] args)
         {
             IWCFService  wcfService = DependencyResolver.Get<IWCFService>();
+           // ServiceHost host = new ServiceHost(typeof(WCFService));
             wcfService.EndpointStarted += StartEdpoint;
             wcfService.EndpointStopped += StopEndpoint;
+            //host.Open();
             wcfService.Start();
-            _endpoint = DependencyResolver.Get<IEndpoint>();
-            _endpoint.Start();
+            //_endpoint = DependencyResolver.Get<IEndpoint>();
+            //_endpoint.Start();
             exitSignal.WaitOne();
+            //host.Close();
             wcfService.Stop();
         }
 

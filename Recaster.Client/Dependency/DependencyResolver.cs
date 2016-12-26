@@ -42,7 +42,7 @@ namespace Recaster.Client.Dependency
                 .InSingletonScope();
             _kernel.Bind<UnicastServerSettingsViewModel>().ToSelf()
                 .InSingletonScope();
-            _kernel.Bind<IProvider>().To<TestProvider>()
+            _kernel.Bind<IProvider>().To<WCFProvider>()
                 .InSingletonScope();
             _kernel.Bind<ReadOnlyCollection<SettingsViewModel>>().ToMethod(x => SettingsViewModel.GetTopLevelSettings())
                 .InSingletonScope();

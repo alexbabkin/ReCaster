@@ -26,14 +26,11 @@ namespace Recaster.Unicast.Receiver
 
         public TcpReceiver(IConfigManager config)
         {
-            var settings = config.UnicastRcvSettings;
-            if (settings != null)
-            {
-                var ip = config.UnicastRcvSettings.IP;
-                var port = config.UnicastRcvSettings.Port;
-                var endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
-                _listener = new TcpListener(endpoint);
-            }
+            var settings = config.UnicastServerSettings;
+            var ip = config.UnicastServerSettings.IP;
+            var port = config.UnicastServerSettings.Port;
+            var endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            _listener = new TcpListener(endpoint);
             _recvQueue = new BufferBlock<MulticastMessage>();
         }
 

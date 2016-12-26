@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using Recaster.Common;
 namespace Recaster.Configuration
 {
-    public enum EndpointType
-    {        
-        MulticastCatcher,
-        MulitcastReceivar
-    }
     public interface IConfigManager
     {
         EndpointType AppType { get; set; }
+
         List<MulticastGroupSettings> MCastRecvSettings { get; }
-        UnicastSettings UnicastRcvSettings { get;}
-        UnicastSettings UnicastSndSettings { get;}
+
+        UnicastSettings UnicastServerSettings { get;}
+
+        UnicastSettings UnicastClientSettings { get;}
+
         void ApplyMulticastRcvSettings(List<MulticastGroupSettings> newSettings);
+
         event EventHandler<MulticastRcvSettingsEventArgs> MulticastRcvSettingsChanged;
+
         void ApplyUnicastRcvSettings(UnicastSettings newSettings);
+
         event EventHandler<UnicastRcvSettingsEventArgs> UnicastRcvSettingsChanged;
+
         void ApplyUnicastSndSettings(UnicastSettings newSettings);
+
         event EventHandler<UnicastSndSettingsEventArgs> UnicastSndeSettingsChanged;
     }
 

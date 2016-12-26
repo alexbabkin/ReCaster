@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EndpointType.cs" />
     <Compile Include="MulticastGroupSettings.cs" />
     <Compile Include="QualifierSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

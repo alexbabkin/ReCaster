@@ -8,6 +8,7 @@ using Recaster.Endpoint;
 using Recaster.Configuration;
 using Recaster.Service;
 using Recaster.WCF;
+using Recaster.Common;
 
 namespace Recaster.Dependency
 {
@@ -58,11 +59,11 @@ namespace Recaster.Dependency
                 .InSingletonScope();
 
             _kernel.Bind<IReceiver>().To<TcpReceiver>()
-                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceivar)
+                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceiver)
                 .InSingletonScope();
 
             _kernel.Bind<ISender>().To<MulticastSender>()
-                 .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceivar)
+                 .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceiver)
                 .InSingletonScope();
         }
 
