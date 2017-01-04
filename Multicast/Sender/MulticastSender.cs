@@ -37,8 +37,7 @@ namespace Recaster.Multicast.Sender
 
         public void Dispose()
         {
-            if (_sender != null)
-                _sender.Dispose();
+            _sender?.Dispose();
         }
     }
 }

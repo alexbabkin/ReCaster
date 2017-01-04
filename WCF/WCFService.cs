@@ -11,14 +11,14 @@ using Recaster.Service;
 namespace Recaster.WCF
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Single, InstanceContextMode = InstanceContextMode.Single)]
-    public class WCFService : IWCFService
+    public class WcfService : IWcfService
     {
-        private static readonly ILog log = LogManager.GetLogger(
+        private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         ServiceHost _host;
-        private IConfigManager _config;
+        private readonly IConfigManager _config;
 
-        public WCFService(IConfigManager config)
+        public WcfService(IConfigManager config)
         {
             _config = config;
         }
@@ -80,16 +80,16 @@ namespace Recaster.WCF
 
         public void Start()
         {
-            log.Debug("starting WCF service");
+            Log.Debug("starting WCF service");
             _host = new ServiceHost(this);
             _host.Open();
-            log.Debug($"WCF service started on {_host.Description.Endpoints[0].Address}");
+            Log.Debug($"WCF service started on {_host.Description.Endpoints[0].Address}");
         }        
         public void Stop()
         {
-            log.Debug($"stopping WCF service {_host.Description.Endpoints[0].Address}");
+            Log.Debug($"stopping WCF service {_host.Description.Endpoints[0].Address}");
             _host.Close();
-            log.Debug("WCF service stopped");
+            Log.Debug("WCF service stopped");
         }
     }
 }

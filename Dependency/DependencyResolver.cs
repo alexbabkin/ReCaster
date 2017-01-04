@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Ninject;
+﻿using Ninject;
 using Recaster.Multicast.Receiver;
 using Recaster.Multicast.Sender;
 using Recaster.Unicast.Sender;
@@ -17,26 +16,16 @@ namespace Recaster.Dependency
         private readonly IKernel _kernel;
         private static DependencyResolver _instance;
 
-        public static DependencyResolver Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new DependencyResolver();
-                }
-                return _instance;
-            }
-        }
+        public static DependencyResolver Instance => _instance ?? (_instance = new DependencyResolver());
 
         public static T Get<T>()
         {
-            return DependencyResolver.Instance._kernel.Get<T>();
+            return Instance._kernel.Get<T>();
         }
 
         public static void Release(object instance)
         {
-            DependencyResolver.Instance._kernel.Release(instance);
+            Instance._kernel.Release(instance);
         }
 
         private DependencyResolver():this(new StandardKernel())
@@ -44,7 +33,7 @@ namespace Recaster.Dependency
             _kernel.Bind<IConfigManager>().To<ConfigManager>()
                 .InSingletonScope();
 
-            _kernel.Bind<IWCFService>().To<WCFService>()
+            _kernel.Bind<IWcfService>().To<WcfService>()
                 .InSingletonScope();
 
             _kernel.Bind<IEndpoint>().To<RecasterEndpoint>()

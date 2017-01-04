@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
@@ -11,21 +10,21 @@ namespace Recaster.Multicast.Receiver
 {
     class MulticastReceiveManager : IReceiver
     {
-        private static readonly ILog log = LogManager.GetLogger(
+        private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly List<IMulticastReceiver> _receivers;
         private readonly BufferBlock<MulticastMessage> _mcastQueue;
 
         private void MessageReceived(object sender, MulticastMsgEventArgs mMsg)
         {
-            log.Info($"Receved message from {mMsg.RemoteEndpoint.Address}:{mMsg.RemoteEndpoint.Port}. Message length is {mMsg.Data.Length}");
+            Log.Info($"Receved message from {mMsg.RemoteEndpoint.Address}:{mMsg.RemoteEndpoint.Port}. Message length is {mMsg.Data.Length}");
             var message = new MulticastMessage(mMsg.Data, mMsg.MCastEndpoint);
             _mcastQueue.Post(message); 
         }
 
         private void SettingsChanged(object sender, MulticastRcvSettingsEventArgs e)
         {
-            log.Debug("MulticastReceiveManager: settings changed");
+            Log.Debug("MulticastReceiveManager: settings changed");
         }
 
         public MulticastReceiveManager(IConfigManager config)

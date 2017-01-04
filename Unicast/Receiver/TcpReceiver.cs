@@ -16,13 +16,13 @@ namespace Recaster.Unicast.Receiver
 {
     public class TcpReceiver : IReceiver
     {
-        private static readonly int BUFFER_SIZE = 4096;
-        private static readonly int BYTE_COUNT_TO_RECEIVE = 1024;
+        private const int BufferSize = 4096;
+        private const int ByteCountToReceive = 1024;
 
-        private static readonly ILog log = LogManager.GetLogger(
+        private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private TcpListener _listener;
-        private BufferBlock<MulticastMessage> _recvQueue;
+        private readonly TcpListener _listener;
+        private readonly BufferBlock<MulticastMessage> _recvQueue;
 
         public TcpReceiver(IConfigManager config)
         {
@@ -36,27 +36,27 @@ namespace Recaster.Unicast.Receiver
 
         private void SettigsChanged(object sender, UnicastRcvSettingsEventArgs e)
         {
-            log.Debug("TcpReceiver: settings changed");
+            Log.Debug("TcpReceiver: settings changed");
         }
 
         public async Task StartAsync(CancellationToken ct)
         {
             try
             {
-                log.Debug($"Starting tcp server on {_listener.LocalEndpoint}");
+                Log.Debug($"Starting tcp server on {_listener.LocalEndpoint}");
                 _listener.Start();
             }
             catch (Exception ex)
             {
-                log.Error("Exception in TcpReceiver.Start", ex);
+                Log.Error("Exception in TcpReceiver.Start", ex);
                 return;
             }
             while (true)
             {
                 ct.ThrowIfCancellationRequested();
-                log.Debug("waitting for connection");
-                TcpClient client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
-                log.Info($"Client has connected: {client.Client.RemoteEndPoint}");
+                Log.Debug("waitting for connection");
+                var client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
+                Log.Info($"Client has connected: {client.Client.RemoteEndPoint}");
                 var task = StartConnectionAsync(client, ct);
             }
         }
@@ -77,7 +77,7 @@ namespace Recaster.Unicast.Receiver
         private async Task HandleConnectionAsync(TcpClient client, CancellationToken ct)
         {
             var ms = new MemoryStream();
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            var binaryFormatter = new BinaryFormatter();
             long msgLength = 0;
             int bufferOffset = 0;
             using (var stream = client.GetStream())
@@ -86,14 +86,14 @@ namespace Recaster.Unicast.Receiver
                 {
                     ct.ThrowIfCancellationRequested();
                     await Task.Yield();
-                    var buffer = new byte[BUFFER_SIZE];
-                    log.Info($"[Server] Reading from client: {client.Client.RemoteEndPoint}");
+                    var buffer = new byte[BufferSize];
+                    Log.Info($"[Server] Reading from client: {client.Client.RemoteEndPoint}");
                     try
                     {
-                        var byteCount = await stream.ReadAsync(buffer, bufferOffset, BYTE_COUNT_TO_RECEIVE, ct);
+                        var byteCount = await stream.ReadAsync(buffer, bufferOffset, ByteCountToReceive, ct);
                         if (byteCount == 0)
                         {
-                            log.Info($"Client {client.Client.RemoteEndPoint} disconnected");
+                            Log.Info($"Client {client.Client.RemoteEndPoint} disconnected");
                             client.Close();
                             return;
                         }
@@ -102,7 +102,7 @@ namespace Recaster.Unicast.Receiver
                     }
                     catch (Exception ex)
                     {
-                        log.Info("Exception while reading data", ex);
+                        Log.Info("Exception while reading data", ex);
                         client.Close();
                         return;
                     }
@@ -122,7 +122,7 @@ namespace Recaster.Unicast.Receiver
                         }
                         catch (Exception ex)
                         {
-                            log.Error("Exception while deserializing object", ex);
+                            Log.Error("Exception while deserializing object", ex);
                         }
                         Array.ConstrainedCopy(buffer, sizeof(long) + (int)msgLength, 
                             buffer, 0, 
@@ -141,8 +141,7 @@ namespace Recaster.Unicast.Receiver
 
         public async Task<MulticastMessage> GetMessageAsync(CancellationToken ct)
         {
-            MulticastMessage msg = null;
-            msg = await _recvQueue.ReceiveAsync();
+            var msg = await _recvQueue.ReceiveAsync(ct);
             return msg;
         }
     }

@@ -9,19 +9,19 @@ namespace Recaster.Multicast.Receiver.Qualifier
     }
     class SourceQualifier : ISourceQualifier
     {
-        private readonly IPAddress _sourceIP = null;
-        private readonly int _sourcePort = 0;
+        private readonly IPAddress _sourceIp;
+        private readonly int _sourcePort;
         private readonly QualifierOption _option;
-        public SourceQualifier(IPAddress sourceIP, int sourcePort, QualifierOption option)
+        public SourceQualifier(IPAddress sourceIp, int sourcePort, QualifierOption option)
         {
-            _sourceIP = sourceIP;
+            _sourceIp = sourceIp;
             _sourcePort = sourcePort;
             _option = option;
         }
 
-        public SourceQualifier(IPAddress sourceIP, QualifierOption option)
+        public SourceQualifier(IPAddress sourceIp, QualifierOption option)
         {
-            _sourceIP = sourceIP;
+            _sourceIp = sourceIp;
             _option = option;
         }
 
@@ -33,26 +33,26 @@ namespace Recaster.Multicast.Receiver.Qualifier
 
         public bool IsSourceQualified(IPEndPoint sourceEndpoint)
         {
-            if ((_sourceIP != null) && (_sourcePort != 0))
+            if ((_sourceIp != null) && (_sourcePort != 0))
             {
                 if (_option == QualifierOption.Accept)
                 {
-                    return _sourceIP.Equals(sourceEndpoint.Address) && (_sourcePort == sourceEndpoint.Port);
+                    return _sourceIp.Equals(sourceEndpoint.Address) && (_sourcePort == sourceEndpoint.Port);
                 }
                 else
                 {
-                    return !(_sourceIP.Equals(sourceEndpoint.Address) && (_sourcePort == sourceEndpoint.Port));
+                    return !(_sourceIp.Equals(sourceEndpoint.Address) && (_sourcePort == sourceEndpoint.Port));
                 }
             }
-            else if (_sourceIP != null)
+            else if (_sourceIp != null)
             {
                 if (_option == QualifierOption.Accept)
                 {
-                    return (_sourceIP == sourceEndpoint.Address);
+                    return (Equals(_sourceIp, sourceEndpoint.Address));
                 }
                 else
                 {
-                    return !_sourceIP.Equals(sourceEndpoint.Address);
+                    return !_sourceIp.Equals(sourceEndpoint.Address);
                 }
             }
             else if (_sourcePort != 0)
@@ -63,7 +63,7 @@ namespace Recaster.Multicast.Receiver.Qualifier
                 }
                 else
                 {
-                    return !(_sourcePort == sourceEndpoint.Port);
+                    return _sourcePort != sourceEndpoint.Port;
                 }
             }
             return true;

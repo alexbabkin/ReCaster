@@ -6,7 +6,7 @@ using Recaster.Common;
 namespace Recaster.Service
 {
     [ServiceContract]
-    public interface IWCFService
+    public interface IWcfService
     {
         void Start();
 

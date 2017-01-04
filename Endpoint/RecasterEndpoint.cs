@@ -7,7 +7,7 @@ namespace Recaster.Endpoint
 {
     public class RecasterEndpoint : IEndpoint, IDisposable
     {
-        private static readonly ILog log = LogManager.GetLogger(
+        private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IReceiver _receiver;
         private readonly ISender _sender;
@@ -34,15 +34,15 @@ namespace Recaster.Endpoint
         {
             var sendingTask = SendMessageAsync(_cts.Token);
             var receivingTask = _receiver.StartAsync(_cts.Token);
-            Task[] tasks = new Task[] { receivingTask, sendingTask };
+            Task[] tasks = { receivingTask, sendingTask };
             try
             {
-                log.Info("Starting Endpoint async...");
+                Log.Info("Starting Endpoint async...");
                 await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
-                log.Error("Exception in endpoint", ex);  
+                Log.Error("Exception in endpoint", ex);  
             }
             Console.ReadLine();
         }
@@ -51,15 +51,15 @@ namespace Recaster.Endpoint
         {
             var sendingTask = SendMessageAsync(_cts.Token);
             var receivingTask = _receiver.StartAsync(_cts.Token);
-            Task[] tasks = new Task[] { receivingTask, sendingTask };
+            Task[] tasks = { receivingTask, sendingTask };
             try
             {
-                log.Info("Starting Endpoint...");
+                Log.Info("Starting Endpoint...");
                 Task.WaitAll(tasks);
             }
             catch (Exception ex)
             {
-                log.Error("Exception in endpoint", ex);
+                Log.Error("Exception in endpoint", ex);
             }
             Console.ReadLine();
         }

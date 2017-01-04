@@ -14,7 +14,7 @@ namespace Recaster.Unicast.Sender
 {
     public class TcpSender : ISender, IDisposable
     {
-        private static readonly ILog log = LogManager.GetLogger(
+        private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private TcpClient _client;
         private NetworkStream _stream;
@@ -35,7 +35,7 @@ namespace Recaster.Unicast.Sender
             var newEndpoint = new IPEndPoint(IPAddress.Parse(newIp), newPort);
             if (!newEndpoint.Equals(_endpoint))
             {
-                log.Debug("TcpSender: Settings changed");
+                Log.Debug("TcpSender: Settings changed");
                 Disconnect();
                 _endpoint = newEndpoint;
             }
@@ -50,7 +50,7 @@ namespace Recaster.Unicast.Sender
             }
             catch (Exception ex)
             {
-                log.Error("Exception rised in Connect", ex);
+                Log.Error("Exception rised in Connect", ex);
                 return false;
             }
             return _client.Connected;
@@ -58,10 +58,8 @@ namespace Recaster.Unicast.Sender
 
         private void Disconnect()
         {
-            if (_client != null)
-                _client.Close();
-            if (_stream != null)
-                _stream.Close();
+            _client?.Close();
+            _stream?.Close();
         }
 
         public async Task SendAsync(MulticastMessage message, CancellationToken ct)
@@ -73,9 +71,9 @@ namespace Recaster.Unicast.Sender
                     return;
             try
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (var ms = new MemoryStream())
                 {
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
+                    var binaryFormatter = new BinaryFormatter();
                     binaryFormatter.Serialize(ms, message);
                     byte[] msgLength = BitConverter.GetBytes(ms.Length);
 
@@ -84,11 +82,11 @@ namespace Recaster.Unicast.Sender
                     ms.Position = 0;
                     ms.CopyTo(_stream);
                 }
-                await _stream.FlushAsync();
+                await _stream.FlushAsync(ct);
             }
             catch (Exception ex)
             {
-                log.Error("Exception rised in SendAsync", ex);
+                Log.Error("Exception rised in SendAsync", ex);
                 Disconnect();
             }
         }

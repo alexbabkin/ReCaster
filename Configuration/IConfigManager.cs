@@ -28,31 +28,28 @@ namespace Recaster.Configuration
 
     public class MulticastRcvSettingsEventArgs : EventArgs
     {
-        private readonly List<MulticastGroupSettings> _mcastGroups;
         public MulticastRcvSettingsEventArgs(List<MulticastGroupSettings> mcastGroups)
         {
-            _mcastGroups = mcastGroups;
+            MCastGroups = mcastGroups;
         }
-        public List<MulticastGroupSettings> MCastGroups { get { return _mcastGroups; } }
+        public List<MulticastGroupSettings> MCastGroups { get; }
     }
 
     public class UnicastRcvSettingsEventArgs : EventArgs
     {
-        private readonly UnicastSettings _ucastRcvSettings;
         public UnicastRcvSettingsEventArgs(UnicastSettings ucastRcvSettings)
         {
-            _ucastRcvSettings = ucastRcvSettings;
+            UCastRcvSettings = ucastRcvSettings;
         }
-        public UnicastSettings UCastRcvSettings { get { return _ucastRcvSettings; } }
+        public UnicastSettings UCastRcvSettings { get; }
     }
 
     public class UnicastSndSettingsEventArgs : EventArgs
     {
-        private readonly UnicastSettings _ucastSndSettings;
         public UnicastSndSettingsEventArgs(UnicastSettings ucastSndSettings)
         {
-            _ucastSndSettings = ucastSndSettings;
+            UCastRcvSettings = ucastSndSettings;
         }
-        public UnicastSettings UCastRcvSettings { get { return _ucastSndSettings; } }
+        public UnicastSettings UCastRcvSettings { get; }
     }
 }
