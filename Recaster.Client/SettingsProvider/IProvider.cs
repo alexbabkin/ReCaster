@@ -17,5 +17,8 @@ namespace Recaster.Client.SettingsProvider
 
         UnicastSettings GetUnicastClientSettings();
         void SetUnicastClientSettings(UnicastSettings settings);
+
+        void StartEndpoint(EndpointType endpointType);
+        void StopEndpoint(EndpointType endpointType);
     }
 }

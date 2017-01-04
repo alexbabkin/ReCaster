@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Recaster.Client.ViewModels.ObservableSrcSettings;
 using System.Windows.Input;
 using Recaster.Client.Utility;
+using System.Linq;
 
 namespace Recaster.Client.ViewModels
 {
@@ -42,7 +43,7 @@ namespace Recaster.Client.ViewModels
         {
             var newQualifier = new QualifierSettings()
             {
-                sourceIP = "::12",
+                sourceIP = "::1",
                 Port = 0,
                 Discard = true
             };
@@ -75,6 +76,29 @@ namespace Recaster.Client.ViewModels
         private bool CanAddSource(object obj)
         {
             return true;
+        }
+
+        public object GetSettings()
+        {
+            var settings = new List<MulticastGroupSettings>();
+            foreach (var source in _settings)
+            {
+                var s = new MulticastGroupSettings()
+                {
+                    Name = source.Name,
+                    GroupAdreass = source.GroupAdreass,
+                    Port = source.Port,
+                    Qualifier = (from q in source.Qualifiers
+                                 select new QualifierSettings()
+                                 {
+                                     sourceIP = q.SourceIP,
+                                     Port = q.Port,
+                                     Discard = q.Discard
+                                 }).ToList()                 
+                };
+                settings.Add(s);
+            }
+            return settings;
         }
 
         public MulticastSourcesSettingsViewModel(IProvider settingsProvider)

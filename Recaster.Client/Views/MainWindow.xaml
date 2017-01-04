@@ -59,8 +59,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="Start Receiver" Grid.Column="0" Command="{Binding ChangeReceiverStateCoammnd}"/>
-                <Button Content="Start Sender" Grid.Column="1" Command="{Binding ChangeSenderStateCommand}"/>
+                <Button Content="{Binding ReceiverStateTitle}" Grid.Column="0" Command="{Binding ChangeReceiverStateCoammnd}"/>
+                <Button Content="{Binding SenderStateTitle}" Grid.Column="1" Command="{Binding ChangeSenderStateCommand}"/>
             </Grid>
         </Grid>
 

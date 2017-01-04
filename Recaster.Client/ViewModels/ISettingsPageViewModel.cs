@@ -3,5 +3,6 @@
     public interface ISettingsPageViewModel
     {
         string Title { get; }
+        object GetSettings();
     }
 }

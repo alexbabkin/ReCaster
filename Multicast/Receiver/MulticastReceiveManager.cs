@@ -13,8 +13,8 @@ namespace Recaster.Multicast.Receiver
     {
         private static readonly ILog log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private List<IMulticastReceiver> _receivers;
-        private BufferBlock<MulticastMessage> _mcastQueue;
+        private readonly List<IMulticastReceiver> _receivers;
+        private readonly BufferBlock<MulticastMessage> _mcastQueue;
 
         private void MessageReceived(object sender, MulticastMsgEventArgs mMsg)
         {
@@ -23,10 +23,16 @@ namespace Recaster.Multicast.Receiver
             _mcastQueue.Post(message); 
         }
 
+        private void SettingsChanged(object sender, MulticastRcvSettingsEventArgs e)
+        {
+            log.Debug("MulticastReceiveManager: settings changed");
+        }
+
         public MulticastReceiveManager(IConfigManager config)
         {
             _receivers = new List<IMulticastReceiver>();
             var settings = config.MCastRecvSettings;
+            config.MulticastRcvSettingsChanged += SettingsChanged;
             foreach (var mgroupSetting in settings)
             {
                 var receiver = new MulticastReceiver(mgroupSetting);

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Recaster.Endpoint
 {
-    public class RecasterEndpoint : IEndpoint
+    public class RecasterEndpoint : IEndpoint, IDisposable
     {
         private static readonly ILog log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private IReceiver _receiver;
-        private ISender _sender;
-        private CancellationTokenSource _cts;
+        private readonly IReceiver _receiver;
+        private readonly ISender _sender;
+        private readonly CancellationTokenSource _cts;
 
         private async Task SendMessageAsync(CancellationToken ct)
         {
@@ -30,14 +30,15 @@ namespace Recaster.Endpoint
             _sender = sender;
         }
 
-        public void Start()
+        public async Task StartAsync()
         {
             var sendingTask = SendMessageAsync(_cts.Token);
             var receivingTask = _receiver.StartAsync(_cts.Token);
             Task[] tasks = new Task[] { receivingTask, sendingTask };
             try
             {
-                Task.WaitAll(tasks);
+                log.Info("Starting Endpoint async...");
+                await Task.WhenAll(tasks);
             }
             catch (Exception ex)
             {
@@ -46,10 +47,34 @@ namespace Recaster.Endpoint
             Console.ReadLine();
         }
 
+        public void Start()
+        {
+            var sendingTask = SendMessageAsync(_cts.Token);
+            var receivingTask = _receiver.StartAsync(_cts.Token);
+            Task[] tasks = new Task[] { receivingTask, sendingTask };
+            try
+            {
+                log.Info("Starting Endpoint...");
+                Task.WaitAll(tasks);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Exception in endpoint", ex);
+            }
+            Console.ReadLine();
+        }
+
         public void Stop()
         {
             _cts.Cancel();
             _receiver.Stop();
+        }
+
+        public void Dispose()
+        {
+            (_sender as IDisposable)?.Dispose();
+            (_receiver as IDisposable)?.Dispose();
+            (_cts as IDisposable)?.Dispose();
         }
     }
 }

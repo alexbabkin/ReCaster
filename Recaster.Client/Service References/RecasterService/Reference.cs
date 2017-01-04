@@ -16,10 +16,10 @@ namespace Recaster.Client.RecasterService {
     public interface IWCFService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFService/StartEndpoint", ReplyAction="http://tempuri.org/IWCFService/StartEndpointResponse")]
-        void StartEndpoint(Recaster.Common.EndpointType endpoinType);
+        void StartEndpoint(Recaster.Common.EndpointType endpointType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFService/StartEndpoint", ReplyAction="http://tempuri.org/IWCFService/StartEndpointResponse")]
-        System.Threading.Tasks.Task StartEndpointAsync(Recaster.Common.EndpointType endpoinType);
+        System.Threading.Tasks.Task StartEndpointAsync(Recaster.Common.EndpointType endpointType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFService/StopEndpoint", ReplyAction="http://tempuri.org/IWCFService/StopEndpointResponse")]
         void StopEndpoint();
@@ -91,12 +91,12 @@ namespace Recaster.Client.RecasterService {
                 base(binding, remoteAddress) {
         }
         
-        public void StartEndpoint(Recaster.Common.EndpointType endpoinType) {
-            base.Channel.StartEndpoint(endpoinType);
+        public void StartEndpoint(Recaster.Common.EndpointType endpointType) {
+            base.Channel.StartEndpoint(endpointType);
         }
         
-        public System.Threading.Tasks.Task StartEndpointAsync(Recaster.Common.EndpointType endpoinType) {
-            return base.Channel.StartEndpointAsync(endpoinType);
+        public System.Threading.Tasks.Task StartEndpointAsync(Recaster.Common.EndpointType endpointType) {
+            return base.Channel.StartEndpointAsync(endpointType);
         }
         
         public void StopEndpoint() {

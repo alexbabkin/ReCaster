@@ -12,8 +12,8 @@ namespace Recaster.Client.SettingsProvider
 
         public WCFProvider()
         {
-            senderProxy = new WCFServiceClient("HttpBindingSender");
-            receiverProxy = new WCFServiceClient("HttpBindingReceiver");
+            senderProxy = new WCFServiceClient("NetTcpBindingSender");
+            receiverProxy = new WCFServiceClient("NetTcpBindingReceiver");
         }
 
         public List<MulticastGroupSettings> GetMulticastSourceSettings()
@@ -27,7 +27,7 @@ namespace Recaster.Client.SettingsProvider
 
         public UnicastSettings GetUnicastClientSettings()
         {
-            return receiverProxy.GetUnicastClientSettings();
+           return receiverProxy.GetUnicastClientSettings();
         }
 
         public void SetUnicastClientSettings(UnicastSettings settings)
@@ -49,6 +49,32 @@ namespace Recaster.Client.SettingsProvider
         {
             senderProxy.Close();
             receiverProxy.Close();
+        }
+
+        public void StartEndpoint(EndpointType endpointType)
+        {
+            switch (endpointType)
+            {
+                case EndpointType.MulitcastSender:
+                    senderProxy.StartEndpoint(EndpointType.MulitcastSender);
+                    break;
+                case EndpointType.MulticastCatcher:
+                    receiverProxy.StartEndpoint(EndpointType.MulticastCatcher);
+                    break;
+            }
+        }
+
+        public void StopEndpoint(EndpointType endpointType)
+        {
+            switch (endpointType)
+            {
+                case EndpointType.MulitcastSender:
+                    senderProxy.StopEndpoint();
+                    break;
+                case EndpointType.MulticastCatcher:
+                    receiverProxy.StopEndpoint();
+                    break;
+            }
         }
     }
 }

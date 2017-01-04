@@ -40,5 +40,15 @@ namespace Recaster.Client.SettingsProvider
         {
             throw new NotImplementedException();
         }
+
+        public void StartEndpoint(EndpointType endpointType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopEndpoint(EndpointType endpointType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

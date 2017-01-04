@@ -77,7 +77,7 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
             {
                 if (_settings.Port != value)
                 {
-                    _settings.Port = Port;
+                    _settings.Port = value;
                     OnPropertyChanged("Port");
                 }
             }

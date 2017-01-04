@@ -1,4 +1,5 @@
-﻿using Recaster.Common;
+﻿using System;
+using Recaster.Common;
 
 namespace Recaster.Client.ViewModels
 {
@@ -36,6 +37,15 @@ namespace Recaster.Client.ViewModels
                     OnPropertyChanged("Port");
                 }
             }
+        }
+
+        public object GetSettings()
+        {
+            return new UnicastSettings()
+            {
+                IP = _settings.IP,
+                Port = _settings.Port
+            };
         }
     }
 }

@@ -26,18 +26,24 @@ namespace Recaster.Unicast.Receiver
 
         public TcpReceiver(IConfigManager config)
         {
-            var settings = config.UnicastServerSettings;
-            var ip = config.UnicastServerSettings.IP;
+            var ip = config.UnicastServerSettings.Ip;
             var port = config.UnicastServerSettings.Port;
             var endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
             _listener = new TcpListener(endpoint);
             _recvQueue = new BufferBlock<MulticastMessage>();
+            config.UnicastRcvSettingsChanged += SettigsChanged;
+        }
+
+        private void SettigsChanged(object sender, UnicastRcvSettingsEventArgs e)
+        {
+            log.Debug("TcpReceiver: settings changed");
         }
 
         public async Task StartAsync(CancellationToken ct)
         {
             try
             {
+                log.Debug($"Starting tcp server on {_listener.LocalEndpoint}");
                 _listener.Start();
             }
             catch (Exception ex)
@@ -48,6 +54,7 @@ namespace Recaster.Unicast.Receiver
             while (true)
             {
                 ct.ThrowIfCancellationRequested();
+                log.Debug("waitting for connection");
                 TcpClient client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
                 log.Info($"Client has connected: {client.Client.RemoteEndPoint}");
                 var task = StartConnectionAsync(client, ct);

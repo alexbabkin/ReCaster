@@ -14,7 +14,7 @@ namespace Recaster.Dependency
 {
     public class DependencyResolver
     {
-        private IKernel _kernel;
+        private readonly IKernel _kernel;
         private static DependencyResolver _instance;
 
         public static DependencyResolver Instance
@@ -48,7 +48,8 @@ namespace Recaster.Dependency
                 .InSingletonScope();
 
             _kernel.Bind<IEndpoint>().To<RecasterEndpoint>()
-                .InSingletonScope();
+               // .InSingletonScope();
+               .InTransientScope();
 
             _kernel.Bind<IReceiver>().To<MulticastReceiveManager>()
                 .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulticastCatcher)
@@ -59,11 +60,11 @@ namespace Recaster.Dependency
                 .InSingletonScope();
 
             _kernel.Bind<IReceiver>().To<TcpReceiver>()
-                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceiver)
+                .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastSender)
                 .InSingletonScope();
 
             _kernel.Bind<ISender>().To<MulticastSender>()
-                 .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastReceiver)
+                 .When(r => _kernel.Get<IConfigManager>().AppType == EndpointType.MulitcastSender)
                 .InSingletonScope();
         }
 

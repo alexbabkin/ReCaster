@@ -30,12 +30,12 @@ namespace Recaster.WCF
 
         public void SetMulticastRcvSettings(List<MulticastGroupSettings> settings)
         {
-            throw new NotImplementedException();
+            _config.ApplyMulticastRcvSettings(settings);
         }
 
         public void SetUnicastServerSettings(UnicastSettings settings)
         {
-            throw new NotImplementedException();
+            _config.ApplyUnicastRcvSettings(settings);
         }
 
         public UnicastSettings GetUnicastServerSettings()
@@ -45,7 +45,7 @@ namespace Recaster.WCF
 
         public void SetUnicastClientSettings(UnicastSettings settings)
         {
-            throw new NotImplementedException();
+            _config.ApplyUnicastSndSettings(settings);
         }
 
         public UnicastSettings GetUnicastClientSettings()
@@ -53,8 +53,9 @@ namespace Recaster.WCF
             return _config.UnicastClientSettings;
         }
 
-        public void StartEndpoint(EndpointType endpoinT)
+        public void StartEndpoint(EndpointType endpointType)
         {
+            _config.AppType = endpointType;
             OnEndpointStarted();
         }
 

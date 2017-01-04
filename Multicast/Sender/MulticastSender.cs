@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Recaster.Utils;
 using Recaster.Endpoint;
 using Recaster.Configuration;
+using System;
 
 namespace Recaster.Multicast.Sender
 {
-    class MulticastSender : ISender
+    class MulticastSender : ISender, IDisposable
     {
         private UdpClient _sender;
 
@@ -32,6 +33,12 @@ namespace Recaster.Multicast.Sender
             await _sender
                 .SendAsync(message.Buffer, message.Buffer.Length, message.MCastEndpoint)
                 .WithCancellation(ct);
+        }
+
+        public void Dispose()
+        {
+            if (_sender != null)
+                _sender.Dispose();
         }
     }
 }

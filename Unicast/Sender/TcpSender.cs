@@ -22,10 +22,23 @@ namespace Recaster.Unicast.Sender
 
         public TcpSender(IConfigManager config)
         {
-            var settigs = config.UnicastClientSettings;
-            var ip = config.UnicastClientSettings.IP;
+            config.UnicastSndeSettingsChanged += SettingsChanged;
+            var ip = config.UnicastClientSettings.Ip;
             var port = config.UnicastClientSettings.Port;
-           _endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+            _endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+        }
+
+        private void SettingsChanged(object sender, UnicastSndSettingsEventArgs e)
+        {
+            var newIp = e.UCastRcvSettings.Ip;
+            var newPort = e.UCastRcvSettings.Port;
+            var newEndpoint = new IPEndPoint(IPAddress.Parse(newIp), newPort);
+            if (!newEndpoint.Equals(_endpoint))
+            {
+                log.Debug("TcpSender: Settings changed");
+                Disconnect();
+                _endpoint = newEndpoint;
+            }
         }
 
         private async Task<bool> Connect()
@@ -75,10 +88,8 @@ namespace Recaster.Unicast.Sender
             }
             catch (Exception ex)
             {
-                _stream.Position = 0;
                 log.Error("Exception rised in SendAsync", ex);
-                if (!_client.Connected)
-                    Disconnect();
+                Disconnect();
             }
         }
 

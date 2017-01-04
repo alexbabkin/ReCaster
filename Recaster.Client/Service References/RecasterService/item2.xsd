@@ -4,7 +4,7 @@
   <xs:element name="StartEndpoint">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Recaster.Common" minOccurs="0" name="endpoinType" type="q1:EndpointType" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Recaster.Common" minOccurs="0" name="endpointType" type="q1:EndpointType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

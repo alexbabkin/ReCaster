@@ -53,8 +53,8 @@ namespace Recaster.Multicast.Receiver
                     qOption = QualifierOption.Discard;
 
                 IPAddress qIP = null;
-                if (q.sourceIP != String.Empty)
-                    qIP = IPAddress.Parse(q.sourceIP);
+                if (q.SourceIp != String.Empty)
+                    qIP = IPAddress.Parse(q.SourceIp);
 
                 var qualifier = new SourceQualifier(qIP, q.Port, qOption);
                 _qualifiers.Add(qualifier);
