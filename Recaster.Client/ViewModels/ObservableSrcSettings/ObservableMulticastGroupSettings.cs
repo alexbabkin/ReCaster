@@ -7,19 +7,18 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
 {
     public class ObservableMulticastGroupSettings : ObservableElement
     {
-        private MulticastGroupSettings _settings;
-        private ObservableCollection<ObservableQualifierSettings> _qualifiers;
+        private readonly MulticastGroupSettings _settings;
 
         public ObservableMulticastGroupSettings(MulticastGroupSettings settings)
         {
             _settings = settings;
-            _qualifiers = new ObservableCollection<ObservableQualifierSettings>();
+            Qualifiers = new ObservableCollection<ObservableQualifierSettings>();
             foreach (var q in _settings.Qualifier)
             {
                 var observableQ = new ObservableQualifierSettings(q);
-                _qualifiers.Add(observableQ);
+                Qualifiers.Add(observableQ);
             }
-            _qualifiers.CollectionChanged += _qualifiers_CollectionChanged;
+            Qualifiers.CollectionChanged += _qualifiers_CollectionChanged;
         }
 
         private void _qualifiers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -29,8 +28,8 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
                 var addedQualifiers = from q in e.NewItems.Cast<ObservableQualifierSettings>()
                                       select new QualifierSettings()
                                       {
-                                          sourceIP = q.SourceIP,
-                                          Port = q.Port,
+                                          SourceIp = q.SourceIp,
+                                          SourcePort = q.Port,
                                           Discard = q.Discard
                                       };
                 _settings.Qualifier.AddRange(addedQualifiers);
@@ -38,8 +37,8 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
             if (e.OldItems != null)
             {
                 var deletedItems = e.OldItems.Cast<ObservableQualifierSettings>();
-                _settings.Qualifier.RemoveAll(q => deletedItems.Any(dq => q.sourceIP == dq.SourceIP && 
-                                                                          q.Port == dq.Port && 
+                _settings.Qualifier.RemoveAll(q => deletedItems.Any(dq => q.SourceIp == dq.SourceIp && 
+                                                                          q.SourcePort == dq.Port && 
                                                                           q.Discard == dq.Discard));
             }
         }
@@ -72,20 +71,17 @@ namespace Recaster.Client.ViewModels.ObservableSrcSettings
 
         public int Port
         {
-            get { return _settings.Port; }
+            get { return _settings.GroupPort; }
             set
             {
-                if (_settings.Port != value)
+                if (_settings.GroupPort != value)
                 {
-                    _settings.Port = value;
+                    _settings.GroupPort = value;
                     OnPropertyChanged("Port");
                 }
             }
         }
 
-        public ObservableCollection<ObservableQualifierSettings> Qualifiers
-        {
-            get { return _qualifiers; }
-        }
+        public ObservableCollection<ObservableQualifierSettings> Qualifiers { get; }
     }
 }

@@ -38,7 +38,7 @@ namespace Recaster.Multicast.Receiver
         public MulticastReceiver(MulticastGroupSettings settings)
         {
             _mcastGroup = IPAddress.Parse(settings.GroupAdreass);
-            _localPort = settings.Port;
+            _localPort = settings.GroupPort;
             _qualifiers = new List<ISourceQualifier>();
             foreach(var q in settings.Qualifier)
             {

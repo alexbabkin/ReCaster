@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using Recaster.Client.Utility;
 using Recaster.Client.SettingsProvider;
 using System.Windows.Input;
-using System;
 using Recaster.Common;
 using System.Collections.Generic;
 
@@ -20,10 +19,9 @@ namespace Recaster.Client.ViewModels
         private string _senderStateTitle;
 
         private readonly IProvider _settingsProvider;
-        private readonly ISettingsPageViewModel _unicastServerSettingsVM;
-        private readonly ISettingsPageViewModel _unicastClientSettingsVM;
-        private readonly ISettingsPageViewModel _multicastSourceSettingsVM;
-        private readonly ReadOnlyCollection<SettingsViewModel> _topLevelSettings;
+        private readonly ISettingsPageViewModel _unicastServerSettingsVm;
+        private readonly ISettingsPageViewModel _unicastClientSettingsVm;
+        private readonly ISettingsPageViewModel _multicastSourceSettingsVm;
         private ISettingsPageViewModel _currentPage;
         
 
@@ -47,7 +45,7 @@ namespace Recaster.Client.ViewModels
         {
             if (SenderStateTitle == SenderTitleToStart)
             {
-                UnicastSettings serverSettings = _unicastServerSettingsVM.GetSettings()
+                UnicastSettings serverSettings = _unicastServerSettingsVm.GetSettings()
                     as UnicastSettings;
                 _settingsProvider.SetUnicastServerSettings(serverSettings);
 
@@ -66,11 +64,11 @@ namespace Recaster.Client.ViewModels
         {
             if (ReceiverStateTitle == ReceiverTitleToStart)
             {
-                UnicastSettings clientSettings = _unicastClientSettingsVM.GetSettings()
+                UnicastSettings clientSettings = _unicastClientSettingsVm.GetSettings()
                     as UnicastSettings;
                 _settingsProvider.SetUnicastClientSettings(clientSettings);
 
-                List<MulticastGroupSettings> mSourceSettings = _multicastSourceSettingsVM.GetSettings()
+                List<MulticastGroupSettings> mSourceSettings = _multicastSourceSettingsVm.GetSettings()
                     as List<MulticastGroupSettings>;
                 _settingsProvider.SetMulticastSourceSettings(mSourceSettings);
 
@@ -86,16 +84,16 @@ namespace Recaster.Client.ViewModels
         }
 
         public MainViewModel(IProvider settingsProvider,
-            ReadOnlyCollection<SettingsViewModel> topLevelSettingsVM,
-            UnicastClientSettingsViewModel unicastClientSettingsVM, 
-            UnicastServerSettingsViewModel unicastServerSettingsVM, 
-            MulticastSourcesSettingsViewModel multicastSourceSettingsVM)
+            ReadOnlyCollection<SettingsViewModel> topLevelSettingsVm,
+            UnicastClientSettingsViewModel unicastClientSettingsVm, 
+            UnicastServerSettingsViewModel unicastServerSettingsVm, 
+            MulticastSourcesSettingsViewModel multicastSourceSettingsVm)
         {
             _settingsProvider = settingsProvider;
-            _unicastServerSettingsVM = unicastServerSettingsVM;
-            _unicastClientSettingsVM = unicastClientSettingsVM;
-            _multicastSourceSettingsVM = multicastSourceSettingsVM;
-            _topLevelSettings = topLevelSettingsVM;
+            _unicastServerSettingsVm = unicastServerSettingsVm;
+            _unicastClientSettingsVm = unicastClientSettingsVm;
+            _multicastSourceSettingsVm = multicastSourceSettingsVm;
+            TopLevelSettings = topLevelSettingsVm;
 
             LoadCommands();
             ReceiverStateTitle = ReceiverTitleToStart;
@@ -109,13 +107,13 @@ namespace Recaster.Client.ViewModels
             switch (selectedSetting.SettingType)
             {
                 case SettingType.UdpServerSettings:
-                    CurrentPage = _unicastServerSettingsVM;
+                    CurrentPage = _unicastServerSettingsVm;
                     break;
                 case SettingType.UdpClientSettings:
-                    CurrentPage = _unicastClientSettingsVM;
+                    CurrentPage = _unicastClientSettingsVm;
                     break;
                 case SettingType.MulticastSourceSettings:
-                    CurrentPage = _multicastSourceSettingsVM;
+                    CurrentPage = _multicastSourceSettingsVm;
                     break;
                 default:
                     CurrentPage = null;
@@ -123,7 +121,8 @@ namespace Recaster.Client.ViewModels
             }
         }
 
-        public ReadOnlyCollection<SettingsViewModel> TopLevelSettings { get { return _topLevelSettings; } }
+        public ReadOnlyCollection<SettingsViewModel> TopLevelSettings { get; }
+
         public ISettingsPageViewModel CurrentPage
         {
             get { return _currentPage; }

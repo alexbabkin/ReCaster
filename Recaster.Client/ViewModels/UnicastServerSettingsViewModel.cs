@@ -6,7 +6,7 @@ namespace Recaster.Client.ViewModels
     {
         public UnicastServerSettingsViewModel(IProvider settingsProvider)
         {
-            _settings = settingsProvider.GetUnicastServerSettings();
+            Settings = settingsProvider.GetUnicastServerSettings();
             _title = "Tcp Server";
         }
     }

@@ -8,22 +8,31 @@ namespace Recaster.Client.SettingsProvider
     {
         public List<MulticastGroupSettings> GetMulticastSourceSettings()
         {
-            var settings = new List<MulticastGroupSettings>();
-            var q = new List<QualifierSettings>();
-            q.Add(new QualifierSettings() { sourceIP = "::1", Port = 0, Discard = true });
-            var s = new MulticastGroupSettings() { Name = "Name", GroupAdreass = "ff3e::ffff:ff01", Port = 57125, Qualifier = q };
-            settings.Add(s);
+            var q = new List<QualifierSettings>
+            {
+                new QualifierSettings() {SourceIp = "::1", SourcePort = 0, Discard = true}
+            };
+            var settings = new List<MulticastGroupSettings>
+            {
+                new MulticastGroupSettings()
+                {
+                    Name = "Name",
+                    GroupAdreass = "ff3e::ffff:ff01",
+                    GroupPort = 57125,
+                    Qualifier = q
+                }
+            };
             return settings;
         }
 
         public UnicastSettings GetUnicastClientSettings()
         {
-            return new UnicastSettings() { IP = "127.0.0.1", Port = 557 };
+            return new UnicastSettings() { Ip = "127.0.0.1", Port = 557 };
         }
 
         public UnicastSettings GetUnicastServerSettings()
         {
-            return new UnicastSettings() { IP = "127.0.0.1", Port = 558 };
+            return new UnicastSettings() { Ip = "127.0.0.1", Port = 558 };
         }
 
         public void SetMulticastSourceSettings(List<MulticastGroupSettings> settings)

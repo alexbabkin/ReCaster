@@ -2,8 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 //Messenger downloaded from StackOverflow and small modifications made
 namespace Recaster.Client.Utility
@@ -185,7 +183,7 @@ namespace Recaster.Client.Utility
             {
                 unchecked
                 {
-                    return ((Recipient != null ? Recipient.GetHashCode() : 0) * 397) ^ (Context != null ? Context.GetHashCode() : 0);
+                    return ((Recipient?.GetHashCode() ?? 0) * 397) ^ (Context?.GetHashCode() ?? 0);
                 }
             }
         }

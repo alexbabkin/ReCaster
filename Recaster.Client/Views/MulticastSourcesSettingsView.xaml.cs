@@ -1,8 +1,4 @@
-﻿using Recaster.Client.ViewModels;
-using Recaster.Client.ViewModels.ObservableSrcSettings;
-using Recaster.Common;
-using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Recaster.Client.Views
 {

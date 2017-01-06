@@ -7,29 +7,19 @@ namespace Recaster.Client.Dependency
 {
     public class DependencyResolver
     {
-        private IKernel _kernel;
+        private readonly IKernel _kernel;
         private static DependencyResolver _instance;
 
-        public static DependencyResolver Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new DependencyResolver();
-                }
-                return _instance;
-            }
-        }
+        public static DependencyResolver Instance => _instance ?? (_instance = new DependencyResolver());
 
         public static T Get<T>()
         {
-            return DependencyResolver.Instance._kernel.Get<T>();
+            return Instance._kernel.Get<T>();
         }
 
         public static void Release(object instance)
         {
-            DependencyResolver.Instance._kernel.Release(instance);
+            Instance._kernel.Release(instance);
         }
 
         private DependencyResolver() : this(new StandardKernel())
@@ -42,7 +32,7 @@ namespace Recaster.Client.Dependency
                 .InSingletonScope();
             _kernel.Bind<UnicastServerSettingsViewModel>().ToSelf()
                 .InSingletonScope();
-            _kernel.Bind<IProvider>().To<WCFProvider>()
+            _kernel.Bind<IProvider>().To<TestProvider>()
                 .InSingletonScope();
             _kernel.Bind<ReadOnlyCollection<SettingsViewModel>>().ToMethod(x => SettingsViewModel.GetTopLevelSettings())
                 .InSingletonScope();

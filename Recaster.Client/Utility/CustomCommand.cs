@@ -5,8 +5,8 @@ namespace Recaster.Client.Utility
 {
     public class CustomCommand : ICommand
     {
-        private Action<object> _execute;
-        private Predicate<object> _canExecute;
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
 
         public CustomCommand(Action<object> execute, Predicate<object> canExecute)
         {
@@ -22,7 +22,7 @@ namespace Recaster.Client.Utility
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameter);
+            return _canExecute == null || _canExecute(parameter);
         }
 
         public void Execute(object parameter)

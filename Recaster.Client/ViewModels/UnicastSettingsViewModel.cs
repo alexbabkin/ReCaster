@@ -1,26 +1,22 @@
-﻿using System;
-using Recaster.Common;
+﻿using Recaster.Common;
 
 namespace Recaster.Client.ViewModels
 {
     public abstract class UnicastSettingsViewModel : ObservableElement, ISettingsPageViewModel
     {
-        protected UnicastSettings _settings;
+        protected UnicastSettings Settings;
         protected string _title;
 
-        public string Title
-        {
-            get { return _title; }
-        }
+        public string Title => _title;
 
         public string Ip
         {
-            get { return _settings.IP; }
+            get { return Settings.Ip; }
             set
             {
-                if (_settings.IP != value)
+                if (Settings.Ip != value)
                 {
-                    _settings.IP = value;
+                    Settings.Ip = value;
                     OnPropertyChanged("Ip");
                 }
             }
@@ -28,12 +24,12 @@ namespace Recaster.Client.ViewModels
 
         public int Port
         {
-            get { return _settings.Port;}
+            get { return Settings.Port;}
             set
             {
-                if (_settings.Port != value)
+                if (Settings.Port != value)
                 {
-                    _settings.Port = value;
+                    Settings.Port = value;
                     OnPropertyChanged("Port");
                 }
             }
@@ -43,8 +39,8 @@ namespace Recaster.Client.ViewModels
         {
             return new UnicastSettings()
             {
-                IP = _settings.IP,
-                Port = _settings.Port
+                Ip = Settings.Ip,
+                Port = Settings.Port
             };
         }
     }

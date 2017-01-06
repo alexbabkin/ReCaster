@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using Recaster.Client.Utility;
 using Recaster.Client.Settings;
@@ -8,7 +7,6 @@ namespace Recaster.Client.ViewModels
 {
     public class SettingsViewModel : ObservableElement
     {
-        private readonly ReadOnlyCollection<SettingsViewModel> _childs;
         private readonly Setting _setting;
         private bool _isSelected;
         private bool _isExpanded;
@@ -16,16 +14,16 @@ namespace Recaster.Client.ViewModels
         private SettingsViewModel(Setting setting)
         {
             _setting = setting;
-            _childs = new ReadOnlyCollection<SettingsViewModel>(
+            Childs = new ReadOnlyCollection<SettingsViewModel>(
                 (from child in _setting.ChildSettings
                  select new SettingsViewModel(child)).ToList());                                
         }
 
-        public ReadOnlyCollection<SettingsViewModel> Childs { get { return _childs; } }
+        public ReadOnlyCollection<SettingsViewModel> Childs { get; }
 
-        public SettingType SettingType { get { return _setting.Type; } }
+        public SettingType SettingType => _setting.Type;
 
-        public string SettingTitle { get { return _setting.Title; } }
+        public string SettingTitle => _setting.Title;
 
         public bool IsExpanded
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Recaster.Client.Settings
 {
@@ -12,37 +13,35 @@ namespace Recaster.Client.Settings
     }
     public class Setting
     {
-        private readonly List<Setting> _childSettings;
-        private readonly string _title;
-        private readonly SettingType _type;
+        public List<Setting> ChildSettings { get; }
 
-        public List<Setting> ChildSettings { get { return _childSettings; } }
+        public string Title { get; }
 
-        public string Title { get { return _title; } }
-
-        public SettingType Type { get { return _type; } }        
+        public SettingType Type { get; }
 
         public Setting(SettingType type)
         {
-            _childSettings = new List<Setting>();
-            _type = type;
-            switch (_type)
+            ChildSettings = new List<Setting>();
+            Type = type;
+            switch (Type)
             {
                 case SettingType.ReceiverSettings:
-                    _title = "Receiver Settings";
+                    Title = "Receiver Settings";
                     break;
                 case SettingType.UdpClientSettings:
-                    _title = "Udp Client";
+                    Title = "Udp Client";
                     break;
                 case SettingType.MulticastSourceSettings:
-                    _title = "Multicast Sources";
+                    Title = "Multicast Sources";
                     break;
                 case SettingType.SenderSettings:
-                    _title = "Sender Settings";
+                    Title = "Sender Settings";
                     break;
                 case SettingType.UdpServerSettings:
-                    _title = "Udp Server";
+                    Title = "Udp Server";
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

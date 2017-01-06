@@ -6,7 +6,7 @@ namespace Recaster.Common
     {
         public string Name { get; set; } = "DefaultName";
         public string GroupAdreass { get; set; } = "::1";
-        public int Port { get; set; } = 0;
+        public int GroupPort { get; set; } = 0;
         public List<QualifierSettings> Qualifier { get; set; }
     }
 }

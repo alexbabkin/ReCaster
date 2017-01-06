@@ -11,7 +11,6 @@ namespace Recaster.Client.ViewModels
 {
     public class MulticastSourcesSettingsViewModel : ObservableElement, ISettingsPageViewModel
     {
-        private ObservableCollection<ObservableMulticastGroupSettings> _settings;
         private ObservableMulticastGroupSettings _selectedSource;
 
         private void LoadCommand()
@@ -43,8 +42,8 @@ namespace Recaster.Client.ViewModels
         {
             var newQualifier = new QualifierSettings()
             {
-                sourceIP = "::1",
-                Port = 0,
+                SourceIp = "::1",
+                SourcePort = 0,
                 Discard = true
             };
             _selectedSource.Qualifiers.Add(new ObservableQualifierSettings(newQualifier));
@@ -57,7 +56,7 @@ namespace Recaster.Client.ViewModels
 
         private void DeleteSource(object obj)
         {
-            _settings.Remove(_selectedSource);
+            Settings.Remove(_selectedSource);
             SelectedSource = null;
         }
 
@@ -67,10 +66,10 @@ namespace Recaster.Client.ViewModels
             {
                 Name = "Name",
                 GroupAdreass = "::1",
-                Port = 0,
+                GroupPort = 0,
                 Qualifier = new List<QualifierSettings>()
             };
-            _settings.Add(new ObservableMulticastGroupSettings(newSource));
+            Settings.Add(new ObservableMulticastGroupSettings(newSource));
         }
 
         private bool CanAddSource(object obj)
@@ -81,18 +80,18 @@ namespace Recaster.Client.ViewModels
         public object GetSettings()
         {
             var settings = new List<MulticastGroupSettings>();
-            foreach (var source in _settings)
+            foreach (var source in Settings)
             {
                 var s = new MulticastGroupSettings()
                 {
                     Name = source.Name,
                     GroupAdreass = source.GroupAdreass,
-                    Port = source.Port,
+                    GroupPort = source.Port,
                     Qualifier = (from q in source.Qualifiers
                                  select new QualifierSettings()
                                  {
-                                     sourceIP = q.SourceIP,
-                                     Port = q.Port,
+                                     SourceIp = q.SourceIp,
+                                     SourcePort = q.Port,
                                      Discard = q.Discard
                                  }).ToList()                 
                 };
@@ -103,26 +102,20 @@ namespace Recaster.Client.ViewModels
 
         public MulticastSourcesSettingsViewModel(IProvider settingsProvider)
         {
-            _settings = new ObservableCollection<ObservableMulticastGroupSettings>();
+            Settings = new ObservableCollection<ObservableMulticastGroupSettings>();
             var sourcesSettings = settingsProvider.GetMulticastSourceSettings();
             
             foreach (var sourceSetting in sourcesSettings)
             {
                 var s = new ObservableMulticastGroupSettings(sourceSetting);
-                _settings.Add(s);
+                Settings.Add(s);
             }
             LoadCommand();
         }
 
-        public string Title
-        {
-            get { return "Multicast Sources"; }
-        }
+        public string Title => "Multicast Sources";
 
-        public ObservableCollection<ObservableMulticastGroupSettings> Settings
-        {
-            get { return _settings; }
-        }
+        public ObservableCollection<ObservableMulticastGroupSettings> Settings { get; }
 
         public ObservableMulticastGroupSettings SelectedSource
         {

@@ -1,42 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Recaster.Common;
-using System.Windows.Input;
+﻿using Recaster.Common;
 
 namespace Recaster.Client.ViewModels.ObservableSrcSettings
 {
     public class ObservableQualifierSettings : ObservableElement
     {
-        private QualifierSettings _qualifier;
+        private readonly QualifierSettings _qualifier;
         public ObservableQualifierSettings(QualifierSettings qualifier)
         {
             _qualifier = qualifier;
         }
 
-        public string SourceIP
+        public string SourceIp
         {
-            get { return _qualifier.sourceIP; }
+            get { return _qualifier.SourceIp; }
             set
             {
-                if (_qualifier.sourceIP != value)
+                if (_qualifier.SourceIp != value)
                 {
-                    _qualifier.sourceIP = value;
-                    OnPropertyChanged("SourceIP");
+                    _qualifier.SourceIp = value;
+                    OnPropertyChanged("SourceIp");
                 }
             }
         }
 
         public int Port
         {
-            get { return _qualifier.Port; }
+            get { return _qualifier.SourcePort; }
             set
             {
-                if (_qualifier.Port != value)
+                if (_qualifier.SourcePort != value)
                 {
-                    _qualifier.Port = value;
+                    _qualifier.SourcePort = value;
                     OnPropertyChanged("Port");
                 }
             }

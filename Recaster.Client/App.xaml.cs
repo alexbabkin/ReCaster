@@ -9,7 +9,7 @@ namespace Recaster.Client
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            this.StartupUri = new System.Uri("Views/MainWindow.xaml", System.UriKind.Relative);
+            StartupUri = new System.Uri("Views/MainWindow.xaml", System.UriKind.Relative);
         }
     }
 }

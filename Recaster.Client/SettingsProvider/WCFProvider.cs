@@ -5,50 +5,50 @@ using Recaster.Client.RecasterService;
 
 namespace Recaster.Client.SettingsProvider
 {
-    public class WCFProvider : IProvider, IDisposable
+    public class WcfProvider : IProvider, IDisposable
     {
-        private WCFServiceClient senderProxy;
-        private WCFServiceClient receiverProxy;
+        private readonly WCFServiceClient _senderProxy;
+        private readonly WCFServiceClient _receiverProxy;
 
-        public WCFProvider()
+        public WcfProvider()
         {
-            senderProxy = new WCFServiceClient("NetTcpBindingSender");
-            receiverProxy = new WCFServiceClient("NetTcpBindingReceiver");
+            _senderProxy = new WCFServiceClient("NetTcpBindingSender");
+            _receiverProxy = new WCFServiceClient("NetTcpBindingReceiver");
         }
 
         public List<MulticastGroupSettings> GetMulticastSourceSettings()
         {
-            return receiverProxy.GetMulticastRcvSettings();
+            return _receiverProxy.GetMulticastRcvSettings();
         }
         public void SetMulticastSourceSettings(List<MulticastGroupSettings> settings)
         {
-            receiverProxy.SetMulticastRcvSettings(settings);
+            _receiverProxy.SetMulticastRcvSettings(settings);
         }
 
         public UnicastSettings GetUnicastClientSettings()
         {
-           return receiverProxy.GetUnicastClientSettings();
+           return _receiverProxy.GetUnicastClientSettings();
         }
 
         public void SetUnicastClientSettings(UnicastSettings settings)
         {
-            receiverProxy.SetUnicastClientSettings(settings);
+            _receiverProxy.SetUnicastClientSettings(settings);
         }
 
         public UnicastSettings GetUnicastServerSettings()
         {
-            return senderProxy.GetUnicastClientSettings();
+            return _senderProxy.GetUnicastClientSettings();
         }
         
         public void SetUnicastServerSettings(UnicastSettings settings)
         {
-            senderProxy.SetUnicastServerSettings(settings);
+            _senderProxy.SetUnicastServerSettings(settings);
         }
 
         public void Dispose()
         {
-            senderProxy.Close();
-            receiverProxy.Close();
+            _senderProxy.Close();
+            _receiverProxy.Close();
         }
 
         public void StartEndpoint(EndpointType endpointType)
@@ -56,11 +56,13 @@ namespace Recaster.Client.SettingsProvider
             switch (endpointType)
             {
                 case EndpointType.MulitcastSender:
-                    senderProxy.StartEndpoint(EndpointType.MulitcastSender);
+                    _senderProxy.StartEndpoint(EndpointType.MulitcastSender);
                     break;
                 case EndpointType.MulticastCatcher:
-                    receiverProxy.StartEndpoint(EndpointType.MulticastCatcher);
+                    _receiverProxy.StartEndpoint(EndpointType.MulticastCatcher);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(endpointType), endpointType, null);
             }
         }
 
@@ -69,10 +71,10 @@ namespace Recaster.Client.SettingsProvider
             switch (endpointType)
             {
                 case EndpointType.MulitcastSender:
-                    senderProxy.StopEndpoint();
+                    _senderProxy.StopEndpoint();
                     break;
                 case EndpointType.MulticastCatcher:
-                    receiverProxy.StopEndpoint();
+                    _receiverProxy.StopEndpoint();
                     break;
             }
         }
