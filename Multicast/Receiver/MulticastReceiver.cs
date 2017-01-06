@@ -50,7 +50,7 @@ namespace Recaster.Multicast.Receiver
                 if (q.SourceIp != string.Empty)
                     qIp = IPAddress.Parse(q.SourceIp);
 
-                var qualifier = new SourceQualifier(qIp, q.Port, qOption);
+                var qualifier = new SourceQualifier(qIp, q.SourcePort, qOption);
                 _qualifiers.Add(qualifier);
             }
         }
@@ -77,7 +77,9 @@ namespace Recaster.Multicast.Receiver
                     if (_qualifiers.All(q => q.IsSourceQualified(result.RemoteEndPoint)))
                     {
                         var e = new MulticastMsgEventArgs(
-                            new IPEndPoint(_mcastGroup, _localPort), result.RemoteEndPoint, result.Buffer);
+                            new IPEndPoint(_mcastGroup, _localPort), 
+                            result.RemoteEndPoint, 
+                            result.Buffer);
                         OnMessageReceived(e);
                     }
                 }

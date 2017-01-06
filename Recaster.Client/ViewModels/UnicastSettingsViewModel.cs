@@ -4,10 +4,8 @@ namespace Recaster.Client.ViewModels
 {
     public abstract class UnicastSettingsViewModel : ObservableElement, ISettingsPageViewModel
     {
-        protected UnicastSettings Settings;
-        protected string _title;
-
-        public string Title => _title;
+        public string Title { get; protected set; }
+        protected UnicastSettings Settings { private get;  set; }
 
         public string Ip
         {
