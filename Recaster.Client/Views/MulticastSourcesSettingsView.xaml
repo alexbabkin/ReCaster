@@ -41,7 +41,7 @@
                       SelectionMode="Single"
                       SelectedItem="{Binding SelectedQualifier}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Source IP" Binding="{Binding SourceIP}"/>
+                    <DataGridTextColumn Header="Source IP" Binding="{Binding SourceIp}"/>
                     <DataGridTextColumn Header="Source Port" Binding="{Binding Port}"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding Discard}"/>
                 </DataGrid.Columns>

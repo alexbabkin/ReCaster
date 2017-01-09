@@ -7,13 +7,13 @@ namespace Recaster.Client.SettingsProvider
 {
     public class WcfProvider : IProvider, IDisposable
     {
-        private readonly WCFServiceClient _senderProxy;
-        private readonly WCFServiceClient _receiverProxy;
+        private readonly WcfServiceClient _senderProxy;
+        private readonly WcfServiceClient _receiverProxy;
 
         public WcfProvider()
         {
-            _senderProxy = new WCFServiceClient("NetTcpBindingSender");
-            _receiverProxy = new WCFServiceClient("NetTcpBindingReceiver");
+            _senderProxy = new WcfServiceClient("NetTcpBindingSender");
+            _receiverProxy = new WcfServiceClient("NetTcpBindingReceiver");
         }
 
         public List<MulticastGroupSettings> GetMulticastSourceSettings()

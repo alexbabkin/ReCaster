@@ -12,7 +12,7 @@ using Recaster.Common;
 
 namespace Recaster.Multicast.Receiver
 {
-    internal class MulticastReceiver: IMulticastReceiver
+    public class MulticastReceiver: IMulticastReceiver
     {
         private readonly IPAddress _mcastGroup;
         private readonly int _localPort;
@@ -30,8 +30,8 @@ namespace Recaster.Multicast.Receiver
             result.AddRange(from adapter in nics
                             where adapter.OperationalStatus == OperationalStatus.Up && 
                                   adapter.Supports(NetworkInterfaceComponent.IPv6)
-                            select adapter.GetIPProperties().GetIPv6Properties() into properties
-                            select properties.Index);
+                            select adapter.GetIPProperties().GetIPv6Properties() into validAdapter
+                            select validAdapter.Index);
             return result;
         }
 

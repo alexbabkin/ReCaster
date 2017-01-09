@@ -8,7 +8,7 @@ using Recaster.Configuration;
 
 namespace Recaster.Multicast.Receiver
 {
-    class MulticastReceiveManager : IReceiver
+    public class MulticastReceiveManager : IReceiver
     {
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

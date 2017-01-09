@@ -29,7 +29,7 @@ namespace Recaster.Client.Settings
                     Title = "Receiver Settings";
                     break;
                 case SettingType.UdpClientSettings:
-                    Title = "Udp Client";
+                    Title = "Unicast Client";
                     break;
                 case SettingType.MulticastSourceSettings:
                     Title = "Multicast Sources";
@@ -38,7 +38,7 @@ namespace Recaster.Client.Settings
                     Title = "Sender Settings";
                     break;
                 case SettingType.UdpServerSettings:
-                    Title = "Udp Server";
+                    Title = "Unicast Server";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

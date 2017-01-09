@@ -16,8 +16,8 @@
   <xs:complexType name="MulticastGroupSettings">
     <xs:sequence>
       <xs:element minOccurs="0" name="GroupAdreass" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GroupPort" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Port" type="xs:int" />
       <xs:element minOccurs="0" name="Qualifier" nillable="true" type="tns:ArrayOfQualifierSettings" />
     </xs:sequence>
   </xs:complexType>
@@ -31,14 +31,14 @@
   <xs:complexType name="QualifierSettings">
     <xs:sequence>
       <xs:element minOccurs="0" name="Discard" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Port" type="xs:int" />
-      <xs:element minOccurs="0" name="sourceIP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceIp" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourcePort" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="QualifierSettings" nillable="true" type="tns:QualifierSettings" />
   <xs:complexType name="UnicastSettings">
     <xs:sequence>
-      <xs:element minOccurs="0" name="IP" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ip" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Port" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

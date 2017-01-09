@@ -54,10 +54,10 @@ namespace Recaster.Unicast.Receiver
             while (true)
             {
                 ct.ThrowIfCancellationRequested();
-                Log.Debug("waitting for connection");
+                Log.Debug("Waitting for new connection...");
                 var client = await _listener.AcceptTcpClientAsync().WithCancellation(ct);
                 Log.Info($"Client has connected: {client.Client.RemoteEndPoint}");
-                var task = StartConnectionAsync(client, ct);
+                await StartConnectionAsync(client, ct);
             }
         }
 
@@ -70,7 +70,8 @@ namespace Recaster.Unicast.Receiver
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Log.Error($"Error in connection {client.Client.RemoteEndPoint}", ex);
+                client.Close();
             }
         }
 
@@ -103,8 +104,7 @@ namespace Recaster.Unicast.Receiver
                     catch (Exception ex)
                     {
                         Log.Info("Exception while reading data", ex);
-                        client.Close();
-                        return;
+                        throw;
                     }
                     
                     if (bufferOffset >= sizeof(long) && msgLength == 0)
